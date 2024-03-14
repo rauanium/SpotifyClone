@@ -8,6 +8,6 @@
 import UIKit
 
 struct AlbumsAndPlaylistsModel {
-    let coverImage: UIImage
-    let coverTitle: String
+    let coverImage: String?
+    let coverTitle: String?
 }

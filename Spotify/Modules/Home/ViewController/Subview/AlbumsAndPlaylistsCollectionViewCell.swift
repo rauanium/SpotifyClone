@@ -63,7 +63,8 @@ class AlbumsAndPlaylistsCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(data: AlbumsAndPlaylistsModel) {
-        coverImage.image = data.coverImage
+        let imageURL = URL(string: data.coverImage ?? "")
+        coverImage.kf.setImage(with: imageURL)
         coverTitle.text = data.coverTitle
     }
     

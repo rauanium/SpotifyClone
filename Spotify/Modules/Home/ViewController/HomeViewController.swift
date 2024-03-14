@@ -11,12 +11,9 @@ import SnapKit
 class HomeViewController: UIViewController {
     var viewModel: HomeViewModel?
     
-    private var sections = [HomeSectionType]()
-    
     private lazy var compositionLayout: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
             self.createCompostionalLayout(section: sectionIndex)
-            
         }
         
         let compositionLayout = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -27,6 +24,9 @@ class HomeViewController: UIViewController {
         compositionLayout.backgroundColor = .clear
         compositionLayout.register(AlbumsAndPlaylistsCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         compositionLayout.register(RecommendedCollectionViewCell.self, forCellWithReuseIdentifier: "recommendedCell")
+        compositionLayout.register(SectionHeaderView.self,
+                                   forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                   withReuseIdentifier: "sectionHeader")
         return compositionLayout
     }()
     
@@ -39,18 +39,21 @@ class HomeViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel = HomeViewModel()
-        viewModel?.loadNewReleasedAlbums(completion: {
-//            self.newReleasedAlbumsCollectionView.reloadData()
+        
+        viewModel?.didLoad()
+        
+        viewModel?.loadRecomended(completion: { [weak self] in
+            self?.compositionLayout.reloadData()
         })
         
-        viewModel?.loadRecomended(completion: {
-//            self.recomendedTableView.reloadData()
+        viewModel?.loadNewReleasedAlbums(completion: { [weak self] in
+            self?.compositionLayout.reloadData()
         })
         
-        viewModel?.loadData(completion: { loadedSections in
-            sections = loadedSections
+        viewModel?.loadFeaturedPlaylists(completion: { [weak self] in
+            self?.compositionLayout.reloadData()
+            
         })
-        
     }
 
     private func setupNavigationBar() {
@@ -80,6 +83,92 @@ class HomeViewController: UIViewController {
         
     }
     
+    
+    private func setupViews() {
+        
+        view.backgroundColor = .mainBackground
+        navigationItem.title = "Home"
+        
+        view.addSubview(compositionLayout)
+        
+        compositionLayout.snp.makeConstraints { make in
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalToSuperview()
+        }
+
+    }
+    
+    @objc
+    func didTapSettings() {
+        let settings = SettingsViewController()
+        settings.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(settings, animated: true)
+        
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel?.numberOfSections ?? 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let type = viewModel?.getSectionViewModel(at: section)
+        switch type {
+        case .newRelseasedAlbums(_, let dataModel):
+            return dataModel.count
+        case .featuredPlaylists(_, let dataModel):
+            return dataModel.count
+        case .recommended(_, let dataModel):
+            return dataModel.count
+        default:
+            return 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        switch type {
+        case .newRelseasedAlbums(_, let dataModel):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumsAndPlaylistsCollectionViewCell
+            cell.configure(data: dataModel[indexPath.row])
+            return cell
+            
+        case .featuredPlaylists(_, let dataModel):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumsAndPlaylistsCollectionViewCell
+            cell.configure(data: dataModel[indexPath.row])
+            return cell
+        case .recommended(_, let dataModel):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as! RecommendedCollectionViewCell
+            cell.configure(with: dataModel[indexPath.row])
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "sectionHeader",
+            for: indexPath) as! SectionHeaderView
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        switch type {
+        case .featuredPlaylists(let title, _):
+            header.configure(headerLabel: title)
+        case .newRelseasedAlbums(let title, _):
+            header.configure(headerLabel: title)
+        case .recommended(let title, _):
+            header.configure(headerLabel: title)
+        default:
+            break
+        }
+        return header
+    }
+    
+}
+//MARK: - Compositional Layout Setting
+extension HomeViewController {
     private func createCompostionalLayout(section: Int) -> NSCollectionLayoutSection {
         switch section {
             
@@ -104,6 +193,14 @@ class HomeViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.contentInsets = .init(top: 8, leading: 16, bottom: 4, trailing: 16)
             section.orthogonalScrollingBehavior = .continuous
+            
+            section.boundarySupplementaryItems = [
+                .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0),
+                                        heightDimension: .estimated(60)),
+                      elementKind: UICollectionView.elementKindSectionHeader,
+                      alignment: .top)
+                
+            ]
             return section
             
         case 1:
@@ -128,6 +225,13 @@ class HomeViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.contentInsets = .init(top: 4, leading: 16, bottom: 4, trailing: 16)
             section.orthogonalScrollingBehavior = .continuous
+            section.boundarySupplementaryItems = [
+                .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                        heightDimension: .estimated(60)),
+                      elementKind: UICollectionView.elementKindSectionHeader,
+                      alignment: .top),
+                
+            ]
             return section
             
         case 2:
@@ -151,6 +255,13 @@ class HomeViewController: UIViewController {
             //        Section
             let section = NSCollectionLayoutSection(group: verticalGroup)
             section.contentInsets = .init(top: 4, leading: 16, bottom: 16, trailing: 16)
+            section.boundarySupplementaryItems = [
+                .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                        heightDimension: .estimated(60)),
+                      elementKind: UICollectionView.elementKindSectionHeader,
+                      alignment: .top),
+                
+            ]
             return section
             
         default:
@@ -175,67 +286,16 @@ class HomeViewController: UIViewController {
             //        Section
             let section = NSCollectionLayoutSection(group: verticalGroup)
             section.contentInsets = .init(top: 4, leading: 16, bottom: 4, trailing: 16)
+            section.boundarySupplementaryItems = [
+                .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                        heightDimension: .estimated(60)),
+                      elementKind: UICollectionView.elementKindSectionHeader,
+                      alignment: .top),
+                
+            ]
             return section
             
         }
         
     }
-    private func setupViews() {
-        
-        view.backgroundColor = .mainBackground
-        navigationItem.title = "Home"
-        
-        view.addSubview(compositionLayout)
-        
-        compositionLayout.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.left.right.equalToSuperview()
-        }
-
-    }  
-    
-    @objc
-    func didTapSettings() {
-        let settings = SettingsViewController()
-        settings.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(settings, animated: true)
-        
-    }
 }
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel?.numberOfSections ?? 0
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch sections[section] {
-        case .newRelseasedAlbums(let dataModel):
-            return dataModel.count
-        case .featuredPlaylists(let dataModel):
-            return dataModel.count
-        case .recommended(let dataModel):
-            return dataModel.count
-            
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch sections[indexPath.section] {
-        case .newRelseasedAlbums(let dataModel):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumsAndPlaylistsCollectionViewCell
-            cell.configure(data: dataModel[indexPath.row])
-            return cell
-            
-        case .featuredPlaylists(let dataModel):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumsAndPlaylistsCollectionViewCell
-            cell.configure(data: dataModel[indexPath.row])
-            return cell
-        case .recommended(let dataModel):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recommendedCell", for: indexPath) as! RecommendedCollectionViewCell
-            cell.configure(with: dataModel[indexPath.row])
-            return cell
-        }
-    }
-}
-
-

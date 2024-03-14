@@ -66,9 +66,9 @@ class SettingsViewController: UIViewController {
     
     private func didTapSignOut() {
         let welcomePage = WelcomeViewController()
-        
-//        delete keychain
-//        KeychainWrapper.standard.removeAllKeys()
+        let welcomeNavigationController = UINavigationController(rootViewController: welcomePage)
+
+        KeychainWrapper.standard.removeAllKeys()
         welcomePage.navigationItem.title = "Spotify"
         welcomePage.modalPresentationStyle = .fullScreen
         navigationController?.present(welcomePage, animated: false)
