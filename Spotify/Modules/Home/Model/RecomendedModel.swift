@@ -8,8 +8,8 @@
 import UIKit
 
 struct RecomendedModel {
-    let coverImage: UIImage
-    let coverTitle: String
+    let coverImage: String?
+    let coverTitle: String?
     let coverSubtitle: String?
 }
 

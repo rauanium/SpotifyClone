@@ -58,7 +58,6 @@ class HomeViewController: UIViewController {
 
     private func setupNavigationBar() {
         
-        
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.titleTextAttributes = [

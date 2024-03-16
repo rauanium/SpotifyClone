@@ -13,6 +13,7 @@ class AlbumsAndPlaylistsCollectionViewCell: UICollectionViewCell {
         let coverImage = UIImageView()
         coverImage.contentMode = .scaleAspectFill
         coverImage.clipsToBounds = true
+        coverImage.layer.cornerRadius = 4
         return coverImage
     }()
     

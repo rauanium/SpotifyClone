@@ -57,12 +57,20 @@ final class AlbumsAndPlaylistsManager {
         }
     }
     
-    func getRecommendations(genres: String, completion: @escaping () -> Void) {
+    func getRecommendations(genres: String, completion: @escaping (APIResult<[Track]>) -> Void) {
         provider.request(.getRecommendations(genres: genres)) { result in
             switch result {
             case .success(let response):
-                break
-            case .failure(let error):
+                do {
+                    let decodedData = try JSONDecoder().decode(RecommendedAlbumsModel.self, from: response.data)
+                    DispatchQueue.main.async {
+                        completion(.success(decodedData.tracks))
+                    }
+                }
+                catch {
+                    print(error)
+                }
+            case .failure(_):
                 break
             }
         }
@@ -74,7 +82,7 @@ final class AlbumsAndPlaylistsManager {
             case .success(let response):
                 guard let genres = try? JSONDecoder().decode(RecommendedGenresModel.self, from: response.data) else { return }
                 completion(genres)
-            case .failure(let error):
+            case .failure(_):
                 break
             }
         }

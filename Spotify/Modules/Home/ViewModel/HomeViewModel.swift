@@ -78,8 +78,8 @@ class HomeViewModel {
         
     }
     
-    func loadRecomended(completion: () -> ()) {
-        let recommended: [RecomendedModel] = []
+    func loadRecomended(completion: @escaping() -> ()) {
+        var recommended: [RecomendedModel] = []
         AlbumsAndPlaylistsManager.shared.getRecommendedGenre { genre in
             var genresCollection = Set<String>()
             while genresCollection.count < 5 {
@@ -89,25 +89,38 @@ class HomeViewModel {
             }
             
             let genres = genresCollection.joined(separator: ",")
-            AlbumsAndPlaylistsManager.shared.getRecommendations(genres: genres) {
-                
+            completion()
+            AlbumsAndPlaylistsManager.shared.getRecommendations(genres: genres) { [weak self] result in
+                switch result {
+                case .success(let response):
+                    print("response \(response)")
+                    response.forEach { track in
+                        recommended.append(.init(coverImage: track.album.images.first?.url,
+                                                 coverTitle: track.album.name,
+                                                 coverSubtitle: track.album.artists.first?.name))
+                    }
+                    if let index = self?.sections.firstIndex(where: {
+                        if case .recommended = $0 {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }) {
+                        self?.sections[index] = .recommended(title: "Recommended", datamodel: recommended)
+                    }
+                    
+                    completion()
+                case .failure(let error):
+                    print("error: \(error)")
+                }
             }
             
-            
+            print("recommended: \(recommended)")
         }
-          
-        if let index = sections.firstIndex(where: {
-            if case .recommended = $0 {
-                return true
-            } else {
-                return false
-            }
-        }) {
-//            sections[index] = .recommended(title: "Recommended", datamodel: recommended)
-        }
-        
-        completion()
     }
+    
+    
+    
     
 //    func loadData(completion: ([HomeSectionType]) -> ()) {
 //        sections.append(.newRelseasedAlbums(datamodel: [

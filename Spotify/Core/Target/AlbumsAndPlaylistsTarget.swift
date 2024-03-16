@@ -45,7 +45,9 @@ extension AlbumsAndPlaylistsTarget: BaseTargetType {
                                                    "offset": 0],
                                       encoding: URLEncoding.default)
         case .getRecommendations(let genres):
-            return .requestParameters(parameters: ["seed_genres": genres],
+            return .requestParameters(parameters: ["limit": 5,
+                                                "offset": 0,
+                                                "seed_genres": genres],
                                       encoding: URLEncoding.default)
         case .getRecommendedGenres:
             return .requestPlain

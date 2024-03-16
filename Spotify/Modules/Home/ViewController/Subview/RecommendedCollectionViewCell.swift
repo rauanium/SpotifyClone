@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RecommendedCollectionViewCell: UICollectionViewCell {
     
@@ -21,6 +22,12 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
     private lazy var coverImage: UIImageView = {
         let coverImage = UIImageView()
         coverImage.contentMode = .scaleAspectFill
+        coverImage.frame.size.width = Consraints.coverImageSize
+        coverImage.frame.size.height = Consraints.coverImageSize
+        
+        coverImage.clipsToBounds = true
+        coverImage.layer.cornerRadius = coverImage.frame.width / 2
+        
         return coverImage
     }()
     
@@ -38,6 +45,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         coverTitle.font = UIFont.systemFont(ofSize: 16)
         coverTitle.textColor = .white
         coverTitle.textAlignment = .left
+        coverTitle.numberOfLines = 1
         return coverTitle
     }()
     
@@ -86,6 +94,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
             make.left.equalTo(coverImage.snp.right).offset(12)
             make.top.bottom.equalTo(coverImage)
         }
+        
         optionsIcon.snp.makeConstraints { make in
             make.centerY.equalTo(coverImage.snp.centerY)
             make.right.equalToSuperview().inset(8)
@@ -96,7 +105,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Configure cell
     func configure(with data: RecomendedModel) {
-        coverImage.image = data.coverImage
+        let imageURL = URL(string: data.coverImage ?? "")
+        coverImage.kf.setImage(with: imageURL)
         coverTitle.text = data.coverTitle
         guard let subtitle = data.coverSubtitle else {
             coverSubtitle.isHidden = true
