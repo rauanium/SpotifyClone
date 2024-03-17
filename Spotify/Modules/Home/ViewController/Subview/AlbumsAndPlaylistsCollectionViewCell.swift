@@ -6,14 +6,18 @@
 //
 
 import UIKit
+import Kingfisher
+import SkeletonView
 
 class AlbumsAndPlaylistsCollectionViewCell: UICollectionViewCell {
-    
+    //MARK: - Properties
     private let coverImage: UIImageView = {
         let coverImage = UIImageView()
         coverImage.contentMode = .scaleAspectFill
         coverImage.clipsToBounds = true
         coverImage.layer.cornerRadius = 4
+        coverImage.isSkeletonable = true
+        coverImage.skeletonCornerRadius = 4
         return coverImage
     }()
     
@@ -23,20 +27,37 @@ class AlbumsAndPlaylistsCollectionViewCell: UICollectionViewCell {
         coverTitle.font = UIFont.systemFont(ofSize: 15)
         coverTitle.textAlignment = .left
         coverTitle.numberOfLines = 2
+        coverTitle.isSkeletonable = true
+        coverTitle.skeletonCornerRadius = 4
         return coverTitle
     }()
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        coverImage.image = nil
+        coverTitle.text = nil
+        if contentView.sk.isSkeletonActive {
+            isSkeletonable = false
+            contentView.isSkeletonable = false
+            contentView.hideSkeleton()
+        }
+    }
+    
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - SetupViews
     private func setupViews() {
+        isSkeletonable = true
+        contentView.isSkeletonable = true
+        
         contentView.backgroundColor = .clear
         contentView.clipsToBounds = true
         [coverImage, coverTitle].forEach{
@@ -62,7 +83,8 @@ class AlbumsAndPlaylistsCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(145)
         }
     }
-    
+
+    //MARK: - Configure cell
     func configure(data: AlbumsAndPlaylistsModel) {
         let imageURL = URL(string: data.coverImage ?? "")
         coverImage.kf.setImage(with: imageURL)

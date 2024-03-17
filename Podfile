@@ -9,5 +9,6 @@ target 'Spotify' do
 	pod 'Moya', '~> 15.0'
 	pod 'SwiftKeychainWrapper'
  	pod 'Kingfisher'
+	pod 'SkeletonView'
 
 end

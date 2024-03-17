@@ -7,9 +7,11 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 
 class HomeViewController: UIViewController {
     var viewModel: HomeViewModel?
+    let dispatchGroup = DispatchGroup()
     
     private lazy var compositionLayout: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
@@ -27,6 +29,8 @@ class HomeViewController: UIViewController {
         compositionLayout.register(SectionHeaderView.self,
                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                    withReuseIdentifier: "sectionHeader")
+        
+        compositionLayout.isSkeletonable = true
         return compositionLayout
     }()
     
@@ -39,21 +43,35 @@ class HomeViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel = HomeViewModel()
+        compositionLayout.showAnimatedGradientSkeleton(
+            usingGradient: .init(baseColor: .silver),
+            transition: .crossDissolve(0.3))
         
+        
+        dispatchGroup.enter()
         viewModel?.didLoad()
+        dispatchGroup.leave()
         
-        viewModel?.loadRecomended(completion: { [weak self] in
-            self?.compositionLayout.reloadData()
+        dispatchGroup.enter()
+        viewModel?.loadRecomended(completion: {
+            self.dispatchGroup.leave()
+        })
+
+        dispatchGroup.enter()
+        viewModel?.loadFeaturedPlaylists(completion: {
+            self.dispatchGroup.leave()
+        })
+
+        dispatchGroup.enter()
+        viewModel?.loadNewReleasedAlbums(completion: {
+            self.dispatchGroup.leave()
         })
         
-        viewModel?.loadNewReleasedAlbums(completion: { [weak self] in
-            self?.compositionLayout.reloadData()
-        })
+        dispatchGroup.notify(queue: .main) {
+            self.compositionLayout.hideSkeleton()
+            self.compositionLayout.reloadData()
+        }
         
-        viewModel?.loadFeaturedPlaylists(completion: { [weak self] in
-            self?.compositionLayout.reloadData()
-            
-        })
     }
 
     private func setupNavigationBar() {
@@ -297,4 +315,42 @@ extension HomeViewController {
         }
         
     }
+}
+
+//MARK: - Skeleton CollectionView DataSource
+
+extension HomeViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        
+        switch type {
+        case .newRelseasedAlbums:
+            return "cell"
+        case .featuredPlaylists:
+            return "cell"
+        case .recommended:
+            return "recommendedCell"
+        default:
+            return ""
+        }
+    }
+    func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+        return viewModel?.numberOfSections ?? 1
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let type = viewModel?.getSectionViewModel(at: section)
+        
+        switch type {
+        case .newRelseasedAlbums:
+            return 3
+        case .featuredPlaylists:
+            return 3
+        case .recommended:
+            return 4
+        default:
+            return 1
+        }
+    }
+    
 }

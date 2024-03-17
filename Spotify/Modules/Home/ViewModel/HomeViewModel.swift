@@ -43,9 +43,9 @@ class HomeViewModel {
                 }) {
                     self?.sections[index] = .featuredPlaylists(title: "Featured Playlists", datamodel: featuredPlaylists)
                 }
-                
                 completion()
             case .failure(_):
+                completion()
                 break
             }
         }
@@ -72,6 +72,7 @@ class HomeViewModel {
                 }
                 completion()
             case .failure(_):
+                completion()
                 break
             }
         }
@@ -89,7 +90,7 @@ class HomeViewModel {
             }
             
             let genres = genresCollection.joined(separator: ",")
-            completion()
+//            completion()
             AlbumsAndPlaylistsManager.shared.getRecommendations(genres: genres) { [weak self] result in
                 switch result {
                 case .success(let response):
@@ -112,46 +113,12 @@ class HomeViewModel {
                     completion()
                 case .failure(let error):
                     print("error: \(error)")
+                    completion()
                 }
             }
             
-            print("recommended: \(recommended)")
+            print("loadRecommended: \(recommended)")
         }
     }
-    
-    
-    
-    
-//    func loadData(completion: ([HomeSectionType]) -> ()) {
-//        sections.append(.newRelseasedAlbums(datamodel: [
-//            .init(coverImage: UIImage(named: "cover1")!, coverTitle: "Anand Bakshi: The Lyricist Who Made…"),
-//            .init(coverImage: UIImage(named: "cover2")!, coverTitle: "E123: Sankar Bora (Co-founder & CO…"),
-//            .init(coverImage: UIImage(named: "cover3")!, coverTitle: "Hymn for the Weekend"),
-//            .init(coverImage: UIImage(named: "cover4")!, coverTitle: "Something Just Like This"),
-//            .init(coverImage: UIImage(named: "cover5")!, coverTitle: "A Rush of Blood to the Head"),
-//        ]))
-//        sections.append(.featuredPlaylists(datamodel: [
-//            .init(coverImage: UIImage(named: "cover3")!, coverTitle: "Hymn for the Weekend"),
-//            .init(coverImage: UIImage(named: "cover4")!, coverTitle: "Something Just Like This"),
-//            .init(coverImage: UIImage(named: "cover5")!, coverTitle: "A Rush of Blood to the Head"),
-//            .init(coverImage: UIImage(named: "cover1")!, coverTitle: "Anand Bakshi: The Lyricist Who Made…"),
-//            .init(coverImage: UIImage(named: "cover2")!, coverTitle: "E123: Sankar Bora (Co-founder & CO…"),
-//
-//        ]))
-//        sections.append(.recommended(datamodel: [
-//            .init(coverImage: UIImage(named: "cover5")!, coverTitle: "Cozy Coffeehouse", coverSubtitle: nil),
-//            .init(coverImage: UIImage(named: "cover4")!, coverTitle: "Cozy", coverSubtitle: "Profile"),
-//            .init(coverImage: UIImage(named: "cover3")!, coverTitle: "Cozy Clouds", coverSubtitle: nil),
-//            .init(coverImage: UIImage(named: "cover2")!, coverTitle: "Kanye West", coverSubtitle: "Dark Fantasy"),
-//            .init(coverImage: UIImage(named: "cover1")!, coverTitle: "Basta", coverSubtitle: "Basta 2")
-//        ]))
-//
-//        completion(sections)
-//
-//
-//    }
-    
-    
-    
     
 }

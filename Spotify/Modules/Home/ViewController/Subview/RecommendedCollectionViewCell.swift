@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SkeletonView
 
 class RecommendedCollectionViewCell: UICollectionViewCell {
     
@@ -27,7 +28,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         
         coverImage.clipsToBounds = true
         coverImage.layer.cornerRadius = coverImage.frame.width / 2
-        
+        coverImage.isSkeletonable = true
         return coverImage
     }()
     
@@ -37,6 +38,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         titleAndSubtitleStackView.spacing = 2
         titleAndSubtitleStackView.alignment = .fill
         titleAndSubtitleStackView.distribution = .fillEqually
+        titleAndSubtitleStackView.isSkeletonable = true
+        titleAndSubtitleStackView.skeletonCornerRadius = 4
         return titleAndSubtitleStackView
     }()
     
@@ -46,6 +49,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         coverTitle.textColor = .white
         coverTitle.textAlignment = .left
         coverTitle.numberOfLines = 1
+        coverTitle.isSkeletonable = true
+        coverTitle.skeletonCornerRadius = 4
         return coverTitle
     }()
     
@@ -54,6 +59,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         coverSubtitle.font = UIFont.systemFont(ofSize: 13)
         coverSubtitle.textColor = .subtitle
         coverSubtitle.textAlignment = .left
+        coverSubtitle.isSkeletonable = true
         return coverSubtitle
     }()
     
@@ -64,7 +70,19 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         return optionsIcon
     }()
     
-    //MARK: - Lifecycle
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        coverImage.image = nil
+        coverTitle.text = nil
+        coverSubtitle.text = nil
+        if contentView.sk.isSkeletonActive {
+            isSkeletonable = false
+            contentView.isSkeletonable = false
+            contentView.hideSkeleton()
+        }
+    }
+    
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -76,6 +94,9 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
     
     //MARK: - SetupViews
     private func setupViews() {
+        isSkeletonable = true
+        contentView.isSkeletonable = true
+        
         [coverImage, titleAndSubtitleStackView, optionsIcon].forEach {
             contentView.addSubview($0)
         }
@@ -93,6 +114,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         titleAndSubtitleStackView.snp.makeConstraints { make in
             make.left.equalTo(coverImage.snp.right).offset(12)
             make.top.bottom.equalTo(coverImage)
+            make.height.greaterThanOrEqualTo(35)
+            make.width.lessThanOrEqualTo(250)
         }
         
         optionsIcon.snp.makeConstraints { make in
