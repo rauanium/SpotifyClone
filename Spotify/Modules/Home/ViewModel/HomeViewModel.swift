@@ -20,9 +20,9 @@ class HomeViewModel {
     }
     
     func didLoad() {
-        sections.append(.newRelseasedAlbums(title: "New Released Albums", datamodel: []))
-        sections.append(.featuredPlaylists(title: "Featured Playlists", datamodel: []))
-        sections.append(.recommended(title: "Recommended", datamodel: []))
+        sections.append(.newRelseasedAlbums(title: "New_Released_Albums".localized, datamodel: []))
+        sections.append(.featuredPlaylists(title: "Featured_Playlists".localized, datamodel: []))
+        sections.append(.recommended(title: "Recommended".localized, datamodel: []))
     }
     
     func loadFeaturedPlaylists(completion: @escaping() -> ()) {
@@ -41,7 +41,7 @@ class HomeViewModel {
                         return false
                     }
                 }) {
-                    self?.sections[index] = .featuredPlaylists(title: "Featured Playlists", datamodel: featuredPlaylists)
+                    self?.sections[index] = .featuredPlaylists(title: "Featured_Playlists".localized, datamodel: featuredPlaylists)
                 }
                 completion()
             case .failure(_):
@@ -68,7 +68,7 @@ class HomeViewModel {
                         return false
                     }
                 }) {
-                    self?.sections[index] = .newRelseasedAlbums(title: "New Released Albums", datamodel: albums)
+                    self?.sections[index] = .newRelseasedAlbums(title: "New_Released_Albums".localized, datamodel: albums)
                 }
                 completion()
             case .failure(_):
@@ -107,7 +107,7 @@ class HomeViewModel {
                             return false
                         }
                     }) {
-                        self?.sections[index] = .recommended(title: "Recommended", datamodel: recommended)
+                        self?.sections[index] = .recommended(title: "Recommended".localized, datamodel: recommended)
                     }
                     
                     completion()

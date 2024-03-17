@@ -67,13 +67,13 @@ class ProfileViewController: UIViewController {
         let displayNameTitle = UILabel()
         displayNameTitle.textColor = .subtitle
         displayNameTitle.font = UIFont.systemFont(ofSize: 13)
-        displayNameTitle.text = "Username"
+        displayNameTitle.text = "Username".localized
         return displayNameTitle
     }()
     
     private lazy var countryTitle: UILabel = {
         let countryTitle = UILabel()
-        countryTitle.text = "Country"
+        countryTitle.text = "Country".localized
         countryTitle.font = UIFont.systemFont(ofSize: 13)
         countryTitle.textColor = .subtitle
         return countryTitle
@@ -82,7 +82,7 @@ class ProfileViewController: UIViewController {
     
     private lazy var planTitle: UILabel = {
         let planTitle = UILabel()
-        planTitle.text = "Plan"
+        planTitle.text = "Plan".localized
         planTitle.textColor = .subtitle
         planTitle.font = UIFont.systemFont(ofSize: 13)
         return planTitle
@@ -123,7 +123,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupViews() {
-        navigationItem.title = "Profile"
+        navigationItem.title = "Profile".localized
         view.backgroundColor = .mainBackground
         
         [profilePicture, infoDashboard].forEach {

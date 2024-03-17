@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  Spotify
+
+  Created by rauan on 3/17/24.
+  
+*/
+//home page
+"New_Released_Albums" = "New Released Albums";
+"Featured_Playlists" = "Featured Playlists";
+"Recommended" = "Recommended";
+
+//tabs
+"Home" = "Home";
+"Search" = "Search";
+"Library" = "Library";
+
+//settings page
+"Settings" = "Settings";
+"View_your_profile" = "View your profile";
+"Sign_Out" = "Sign Out";
+"Account" = "Account";
+"Profile" = "Profile";
+
+//profile page
+"Username" = "Username";
+"Country" = "Country";
+"Plan" = "Plan";

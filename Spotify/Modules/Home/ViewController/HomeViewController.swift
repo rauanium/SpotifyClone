@@ -104,7 +104,7 @@ class HomeViewController: UIViewController {
     private func setupViews() {
         
         view.backgroundColor = .mainBackground
-        navigationItem.title = "Home"
+        navigationItem.title = "Home".localized
         
         view.addSubview(compositionLayout)
         

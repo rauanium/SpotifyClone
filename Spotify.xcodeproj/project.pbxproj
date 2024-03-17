@@ -16,6 +16,8 @@
 		9153AFD32B7CB61300B7A805 /* AlbumsAndPlaylistsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9153AFD22B7CB61300B7A805 /* AlbumsAndPlaylistsModel.swift */; };
 		9153AFD52B7CB65D00B7A805 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9153AFD42B7CB65D00B7A805 /* HomeViewModel.swift */; };
 		9194AB542B8F830600DADCF8 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9194AB532B8F830600DADCF8 /* BaseTargetType.swift */; };
+		919BF2312BA73E07008F4D6C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 919BF2332BA73E07008F4D6C /* Localizable.strings */; };
+		919BF2362BA73F58008F4D6C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919BF2352BA73F58008F4D6C /* String+Extension.swift */; };
 		91A17AD42B871BA100729FA1 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17AD32B871BA100729FA1 /* TabBarViewController.swift */; };
 		91A17AD82B871C9200729FA1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17AD72B871C9200729FA1 /* SearchViewController.swift */; };
 		91A17ADA2B871C9C00729FA1 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17AD92B871C9C00729FA1 /* LibraryViewController.swift */; };
@@ -62,6 +64,9 @@
 		9153AFD22B7CB61300B7A805 /* AlbumsAndPlaylistsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsAndPlaylistsModel.swift; sourceTree = "<group>"; };
 		9153AFD42B7CB65D00B7A805 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9194AB532B8F830600DADCF8 /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
+		919BF2322BA73E07008F4D6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		919BF2342BA73E2F008F4D6C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		919BF2352BA73F58008F4D6C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		91A17AD32B871BA100729FA1 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		91A17AD72B871C9200729FA1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		91A17AD92B871C9C00729FA1 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +167,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		919BF22E2BA73DA4008F4D6C /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				919BF2332BA73E07008F4D6C /* Localizable.strings */,
+			);
+			path = Localizations;
+			sourceTree = "<group>";
+		};
 		91A17AD22B871B8200729FA1 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +219,7 @@
 		91BF96F22B87197D00CA5CE0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				919BF22E2BA73DA4008F4D6C /* Localizations */,
 				91F94E6F2B7CA94E00994574 /* SceneDelegate.swift */,
 				91F94E792B7CA95300994574 /* Assets.xcassets */,
 				91F94E6D2B7CA94E00994574 /* AppDelegate.swift */,
@@ -284,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				91E2C1672B91B1D700B8A1F9 /* UINavigationItemExtension.swift */,
+				919BF2352BA73F58008F4D6C /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -517,6 +532,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 91F94E612B7CA94E00994574;
 			productRefGroup = 91F94E6B2B7CA94E00994574 /* Products */;
@@ -534,6 +550,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91F94E7D2B7CA95300994574 /* LaunchScreen.storyboard in Resources */,
+				919BF2312BA73E07008F4D6C /* Localizable.strings in Resources */,
 				91F94E7A2B7CA95300994574 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,12 +644,22 @@
 				91A17ADA2B871C9C00729FA1 /* LibraryViewController.swift in Sources */,
 				9132D6912B99BA8D00E27046 /* RecommendedCollectionViewCell.swift in Sources */,
 				91E9DA532B88C2C600DF1F21 /* AuthResponse.swift in Sources */,
+				919BF2362BA73F58008F4D6C /* String+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		919BF2332BA73E07008F4D6C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				919BF2322BA73E07008F4D6C /* en */,
+				919BF2342BA73E2F008F4D6C /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		91F94E7B2B7CA95300994574 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -649,6 +676,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -712,6 +740,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

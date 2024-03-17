@@ -12,7 +12,7 @@ import SwiftKeychainWrapper
 class SettingsViewController: UIViewController {
     
     private var sections = [SectionModel]()
-
+    private var keychainWrapper: KeychainWrapper = .standard
     private lazy var settingsTableView: UITableView = {
         let settingsTableView = UITableView(frame: .zero, style: .grouped)
         settingsTableView.backgroundColor = .clear
@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
     }
     
     private func setupViews() {
-        navigationItem.title = "Settings"
+        navigationItem.title = "Settings".localized
         view.backgroundColor = .mainBackground
         navigationItem.setBackBarItem()
         navigationController?.navigationBar.tintColor = .white
@@ -46,13 +46,13 @@ class SettingsViewController: UIViewController {
     }
     
     private func setupData() {
-        sections.append(.init(title: "Profile", row: [.init(title: "View your profile", handler: { [weak self] in
+        sections.append(.init(title: "Profile".localized, row: [.init(title: "View_your_profile".localized, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.showProfilePage()
             }
         })]))
         
-        sections.append(.init(title: "Account", row: [.init(title: "Sign Out", handler: { [weak self] in
+        sections.append(.init(title: "Account", row: [.init(title: "Sign_Out".localized, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.didTapSignOut()
             }
@@ -65,13 +65,18 @@ class SettingsViewController: UIViewController {
     }
     
     private func didTapSignOut() {
-        let welcomePage = WelcomeViewController()
-        let welcomeNavigationController = UINavigationController(rootViewController: welcomePage)
-
-        KeychainWrapper.standard.removeAllKeys()
-        welcomePage.navigationItem.title = "Spotify"
-        welcomePage.modalPresentationStyle = .fullScreen
-        navigationController?.present(welcomePage, animated: false)
+        let welcomeViewController = WelcomeViewController()
+        let welcomeNavigationController = UINavigationController(rootViewController: welcomeViewController)
+        welcomeNavigationController.modalPresentationStyle = .fullScreen
+        welcomeNavigationController.navigationBar.prefersLargeTitles = true
+        welcomeNavigationController.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
+        
+        
+        keychainWrapper.remove(forKey: "refreshToken")
+        keychainWrapper.remove(forKey: "accessToken")
+        self.present(welcomeNavigationController, animated: true) {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
         
     }
 

@@ -23,9 +23,9 @@ class TabBarViewController: UITabBarController {
         let searchViewController = UINavigationController(rootViewController: SearchViewController())
         let libraryViewController = UINavigationController(rootViewController: LibraryViewController())
         
-        homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
-        searchViewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        libraryViewController.tabBarItem = UITabBarItem(title: "Library", image: UIImage(named: "icon_library"), tag: 1)
+        homeViewController.tabBarItem = UITabBarItem(title: "Home".localized, image: UIImage(systemName: "house"), tag: 1)
+        searchViewController.tabBarItem = UITabBarItem(title: "Search".localized, image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        libraryViewController.tabBarItem = UITabBarItem(title: "Library".localized, image: UIImage(named: "icon_library"), tag: 1)
         
         let viewControllers: [UINavigationController] = [homeViewController, searchViewController, libraryViewController]
         
