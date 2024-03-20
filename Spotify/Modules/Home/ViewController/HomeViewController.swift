@@ -189,10 +189,12 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let albumDetailsViewController = AlbumDetailViewController()
         switch type {
         case .newRelseasedAlbums(_, let dataModel):
+            albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
             self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
         case .featuredPlaylists(_, let dataModel):
-            break
-        case .recommended(_, let dataModel):
+            albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
+            self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
+        case .recommended(_, _):
             break
         default:
             break

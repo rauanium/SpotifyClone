@@ -31,6 +31,8 @@
 		91D1A91C2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */; };
 		91D1A91E2BAACDEE007C48D3 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */; };
 		91D1A9212BAADA0A007C48D3 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9202BAADA0A007C48D3 /* AlbumDetailViewController.swift */; };
+		91D1A9232BAAF021007C48D3 /* ImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9222BAAF021007C48D3 /* ImageFactory.swift */; };
+		91D1A9252BAAF673007C48D3 /* StackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9242BAAF673007C48D3 /* StackFactory.swift */; };
 		91DB8B1E2B8F16EF00EFEF7C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */; };
 		91DB8B202B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */; };
 		91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */; };
@@ -87,6 +89,8 @@
 		91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryProtocol.swift; sourceTree = "<group>"; };
 		91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		91D1A9202BAADA0A007C48D3 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
+		91D1A9222BAAF021007C48D3 /* ImageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactory.swift; sourceTree = "<group>"; };
+		91D1A9242BAAF673007C48D3 /* StackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackFactory.swift; sourceTree = "<group>"; };
 		91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluginConfig.swift; sourceTree = "<group>"; };
 		91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerPlugin.swift; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 			isa = PBXGroup;
 			children = (
 				91D1A9102BA9A80A007C48D3 /* LabelFactory.swift */,
+				91D1A9222BAAF021007C48D3 /* ImageFactory.swift */,
+				91D1A9242BAAF673007C48D3 /* StackFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 				9153AFD52B7CB65D00B7A805 /* HomeViewModel.swift in Sources */,
 				91D1A91C2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift in Sources */,
 				91A17ADC2B87372E00729FA1 /* AuthManager.swift in Sources */,
+				91D1A9252BAAF673007C48D3 /* StackFactory.swift in Sources */,
 				91DB8B1E2B8F16EF00EFEF7C /* GlobalConstants.swift in Sources */,
 				91D1A9112BA9A80A007C48D3 /* LabelFactory.swift in Sources */,
 				91EC31032BA368B200446877 /* FeaturedPlaylistsModel.swift in Sources */,
@@ -687,6 +694,7 @@
 				910208F72B9255A300A4057D /* ProfileViewModel.swift in Sources */,
 				91D1A9142BA9B87B007C48D3 /* LocalizationManager.swift in Sources */,
 				91EC31052BA3698400446877 /* NewReleasedModel.swift in Sources */,
+				91D1A9232BAAF021007C48D3 /* ImageFactory.swift in Sources */,
 				91EC31072BA369B300446877 /* RecommendedGenresModel.swift in Sources */,
 				91EC31012BA3688600446877 /* AlbumsAndPlaylistsTarget.swift in Sources */,
 				91DB8B202B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift in Sources */,

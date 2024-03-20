@@ -14,6 +14,7 @@ final class LabelFactory {
         textColor: UIColor? = .white,
         textAlignment: NSTextAlignment = .left,
         numberOfLines: Int = 0,
+        height: CGFloat = 20,
         isSkeletonable: Bool = false,
         sekeletonCornerRadius: Float = 2
     ) -> UILabel {
@@ -23,6 +24,7 @@ final class LabelFactory {
         label.textColor = textColor
         label.textAlignment = textAlignment
         label.numberOfLines = numberOfLines
+        label.bounds.size.height = height
         label.isSkeletonable = isSkeletonable
         label.skeletonCornerRadius = sekeletonCornerRadius
         return label

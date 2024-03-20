@@ -32,7 +32,7 @@ class HomeViewModel {
             switch result {
             case .success(let response):
                 response.forEach {
-                    featuredPlaylists.append( .init(coverImage: $0.images.first?.url, coverTitle: $0.name))
+                    featuredPlaylists.append( .init(albumID: nil, coverImage: $0.images.first?.url, coverTitle: $0.name))
                 }
                 if let index = self?.sections.firstIndex(where: {
                     if case .featuredPlaylists = $0 {
@@ -59,7 +59,7 @@ class HomeViewModel {
             switch result {
             case .success(let response):
                 response.forEach {
-                    albums.append( .init(coverImage: $0.images.first?.url, coverTitle: $0.name))
+                    albums.append( .init(albumID: nil, coverImage: $0.images.first?.url, coverTitle: $0.name))
                 }
                 if let index = self?.sections.firstIndex(where: {
                     if case .newRelseasedAlbums = $0 {
