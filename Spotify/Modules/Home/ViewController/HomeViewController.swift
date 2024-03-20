@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import SkeletonView
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     var viewModel: HomeViewModel?
     let dispatchGroup = DispatchGroup()
     
@@ -39,6 +39,9 @@ class HomeViewController: UIViewController {
         setupViews()
         setupViewModel()
         setupNavigationBar()
+    }
+    override func setupLanguage() {
+        navigationItem.title = "Home".localized
     }
     
     private func setupViewModel() {
@@ -71,7 +74,6 @@ class HomeViewController: UIViewController {
             self.compositionLayout.hideSkeleton()
             self.compositionLayout.reloadData()
         }
-        
     }
 
     private func setupNavigationBar() {

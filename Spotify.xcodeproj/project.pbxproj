@@ -24,6 +24,12 @@
 		91A17ADC2B87372E00729FA1 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17ADB2B87372E00729FA1 /* AuthManager.swift */; };
 		91A17ADF2B873E3F00729FA1 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17ADE2B873E3F00729FA1 /* WelcomeViewController.swift */; };
 		91A17AE22B87403B00729FA1 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17AE12B87403B00729FA1 /* AuthViewController.swift */; };
+		91D1A9112BA9A80A007C48D3 /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9102BA9A80A007C48D3 /* LabelFactory.swift */; };
+		91D1A9142BA9B87B007C48D3 /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9132BA9B87B007C48D3 /* LocalizationManager.swift */; };
+		91D1A9162BA9B8AF007C48D3 /* SupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9152BA9B8AF007C48D3 /* SupportedLanguages.swift */; };
+		91D1A9192BA9DA49007C48D3 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9182BA9DA49007C48D3 /* BaseViewController.swift */; };
+		91D1A91C2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */; };
+		91D1A91E2BAACDEE007C48D3 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */; };
 		91DB8B1E2B8F16EF00EFEF7C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */; };
 		91DB8B202B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */; };
 		91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */; };
@@ -73,6 +79,12 @@
 		91A17ADB2B87372E00729FA1 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		91A17ADE2B873E3F00729FA1 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		91A17AE12B87403B00729FA1 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		91D1A9102BA9A80A007C48D3 /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
+		91D1A9132BA9B87B007C48D3 /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		91D1A9152BA9B8AF007C48D3 /* SupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedLanguages.swift; sourceTree = "<group>"; };
+		91D1A9182BA9DA49007C48D3 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryProtocol.swift; sourceTree = "<group>"; };
+		91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluginConfig.swift; sourceTree = "<group>"; };
 		91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerPlugin.swift; sourceTree = "<group>"; };
@@ -261,6 +273,40 @@
 			path = AuthManager;
 			sourceTree = "<group>";
 		};
+		91D1A90F2BA9A7E6007C48D3 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				91D1A9102BA9A80A007C48D3 /* LabelFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		91D1A9122BA9B860007C48D3 /* LocalizationManager */ = {
+			isa = PBXGroup;
+			children = (
+				91D1A9132BA9B87B007C48D3 /* LocalizationManager.swift */,
+				91D1A9152BA9B8AF007C48D3 /* SupportedLanguages.swift */,
+			);
+			path = LocalizationManager;
+			sourceTree = "<group>";
+		};
+		91D1A9172BA9DA2F007C48D3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				91D1A9182BA9DA49007C48D3 /* BaseViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		91D1A91A2BAACDB0007C48D3 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */,
+				91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		91DB8B1C2B8F16D700EFEF7C /* GlobalData */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +335,10 @@
 		91E2C1652B91B1B100B8A1F9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				91D1A91A2BAACDB0007C48D3 /* Repository */,
+				91D1A9172BA9DA2F007C48D3 /* Common */,
+				91D1A9122BA9B860007C48D3 /* LocalizationManager */,
+				91D1A90F2BA9A7E6007C48D3 /* Factory */,
 				91E2C1662B91B1BB00B8A1F9 /* Extensions */,
 			);
 			path = Sources;
@@ -605,13 +655,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				9153AFD52B7CB65D00B7A805 /* HomeViewModel.swift in Sources */,
+				91D1A91C2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift in Sources */,
 				91A17ADC2B87372E00729FA1 /* AuthManager.swift in Sources */,
 				91DB8B1E2B8F16EF00EFEF7C /* GlobalConstants.swift in Sources */,
+				91D1A9112BA9A80A007C48D3 /* LabelFactory.swift in Sources */,
 				91EC31032BA368B200446877 /* FeaturedPlaylistsModel.swift in Sources */,
+				91D1A9192BA9DA49007C48D3 /* BaseViewController.swift in Sources */,
 				91E2C1722B91BD0900B8A1F9 /* ProfileManager.swift in Sources */,
 				91E2C1682B91B1D700B8A1F9 /* UINavigationItemExtension.swift in Sources */,
 				91A17AD42B871BA100729FA1 /* TabBarViewController.swift in Sources */,
 				91E2C16B2B91B39300B8A1F9 /* ProfileViewController.swift in Sources */,
+				91D1A9162BA9B8AF007C48D3 /* SupportedLanguages.swift in Sources */,
 				91A17AE22B87403B00729FA1 /* AuthViewController.swift in Sources */,
 				91E2C1792B9252C300B8A1F9 /* UserProfileModel.swift in Sources */,
 				9153AFD12B7CAFD500B7A805 /* AlbumsAndPlaylistsCollectionViewCell.swift in Sources */,
@@ -620,6 +674,7 @@
 				91A17ADF2B873E3F00729FA1 /* WelcomeViewController.swift in Sources */,
 				91EC30FE2BA367B900446877 /* AlbumsAndPlaylistsManager.swift in Sources */,
 				910208F72B9255A300A4057D /* ProfileViewModel.swift in Sources */,
+				91D1A9142BA9B87B007C48D3 /* LocalizationManager.swift in Sources */,
 				91EC31052BA3698400446877 /* NewReleasedModel.swift in Sources */,
 				91EC31072BA369B300446877 /* RecommendedGenresModel.swift in Sources */,
 				91EC31012BA3688600446877 /* AlbumsAndPlaylistsTarget.swift in Sources */,
@@ -635,6 +690,7 @@
 				91E2C16F2B91B52500B8A1F9 /* SectionModel.swift in Sources */,
 				91EC310C2BA36C6200446877 /* RecommendedAlbumsModel.swift in Sources */,
 				9153AFD32B7CB61300B7A805 /* AlbumsAndPlaylistsModel.swift in Sources */,
+				91D1A91E2BAACDEE007C48D3 /* AuthRepository.swift in Sources */,
 				91E2C1742B91BD8700B8A1F9 /* ProfileTargetType.swift in Sources */,
 				91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */,
 				914159742B8CEDF400BC456E /* AuthTarget.swift in Sources */,

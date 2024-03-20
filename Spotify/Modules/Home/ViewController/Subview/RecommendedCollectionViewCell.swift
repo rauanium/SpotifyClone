@@ -25,7 +25,6 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         coverImage.contentMode = .scaleAspectFill
         coverImage.frame.size.width = Consraints.coverImageSize
         coverImage.frame.size.height = Consraints.coverImageSize
-        
         coverImage.clipsToBounds = true
         coverImage.layer.cornerRadius = coverImage.frame.width / 2
         coverImage.isSkeletonable = true
@@ -43,25 +42,15 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         return titleAndSubtitleStackView
     }()
     
-    private lazy var coverTitle: UILabel = {
-        let coverTitle = UILabel()
-        coverTitle.font = UIFont.systemFont(ofSize: 16)
-        coverTitle.textColor = .white
-        coverTitle.textAlignment = .left
-        coverTitle.numberOfLines = 1
-        coverTitle.isSkeletonable = true
-        coverTitle.skeletonCornerRadius = 4
-        return coverTitle
-    }()
+    private lazy var coverTitle = LabelFactory.createLabel(
+        numberOfLines: 1,
+        isSkeletonable: true)
     
-    private lazy var coverSubtitle: UILabel = {
-        let coverSubtitle = UILabel()
-        coverSubtitle.font = UIFont.systemFont(ofSize: 13)
-        coverSubtitle.textColor = .subtitle
-        coverSubtitle.textAlignment = .left
-        coverSubtitle.isSkeletonable = true
-        return coverSubtitle
-    }()
+    private lazy var coverSubtitle = LabelFactory.createLabel(
+        font: UIFont.systemFont(ofSize: 13),
+        textColor: .subtitle,
+        numberOfLines: 1,
+        isSkeletonable: true)
     
     private lazy var optionsIcon: UIImageView = {
         let optionsIcon = UIImageView()

@@ -9,10 +9,16 @@ import UIKit
 import SnapKit
 import SwiftKeychainWrapper
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: BaseViewController {
     
     private var sections = [SectionModel]()
-    private var keychainWrapper: KeychainWrapper = .standard
+//    private var keychainWrapper: KeychainWrapper = .standard
+    private var currentLanguage: SupportedLanguages? {
+        didSet {
+            guard let currentLanguage else { return }
+            shouldChangeLanguage(language: currentLanguage)
+        }
+    }
     private lazy var settingsTableView: UITableView = {
         let settingsTableView = UITableView(frame: .zero, style: .grouped)
         settingsTableView.backgroundColor = .clear
@@ -27,14 +33,11 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         setupData()
         setupViews()
+        setupNavigation()
     }
     
     private func setupViews() {
-        navigationItem.title = "Settings".localized
         view.backgroundColor = .mainBackground
-        navigationItem.setBackBarItem()
-        navigationController?.navigationBar.tintColor = .white
-        
         view.addSubview(settingsTableView)
         
         settingsTableView.snp.makeConstraints { make in
@@ -42,6 +45,47 @@ class SettingsViewController: UIViewController {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             
+        }
+    }
+    override func setupLanguage() {
+        navigationItem.title = "Settings".localized
+        
+    }
+    
+    private func setupNavigation() {
+        navigationItem.title = "Settings".localized
+        navigationItem.setBackBarItem()
+        navigationController?.navigationBar.tintColor = .white
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"), style: .plain, target: self, action: #selector(didChangeLanugage))
+    }
+    
+    @objc
+    private func didChangeLanugage() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        SupportedLanguages.allLanguages.forEach { language in
+            alert.addAction(
+                .init(
+                    title: language.localizedTitle,
+                    style: .default,
+                    handler: { [weak self] _ in
+                        self?.currentLanguage = language
+                    }
+                ))
+            
+        }
+        alert.addAction(
+            .init(title: "Cancel".localized,
+                  style: .cancel))
+        self.present(alert, animated: true)
+    }
+    
+    private func shouldChangeLanguage(language: SupportedLanguages) {
+        Bundle.setLanguages(language: language.rawValue)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(
+                name: NSNotification.Name("languageObserver"),
+                object: nil)
         }
     }
     
@@ -52,7 +96,7 @@ class SettingsViewController: UIViewController {
             }
         })]))
         
-        sections.append(.init(title: "Account", row: [.init(title: "Sign_Out".localized, handler: { [weak self] in
+        sections.append(.init(title: "Account".localized, row: [.init(title: "Sign_Out".localized, handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.didTapSignOut()
             }
@@ -72,8 +116,7 @@ class SettingsViewController: UIViewController {
         welcomeNavigationController.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
         
         
-        keychainWrapper.remove(forKey: "refreshToken")
-        keychainWrapper.remove(forKey: "accessToken")
+        AuthManager.shared.removeTokens()
         self.present(welcomeNavigationController, animated: true) {
             self.navigationController?.popToRootViewController(animated: true)
         }

@@ -8,6 +8,10 @@
 import Foundation
 extension String {
     var localized: String {
-        NSLocalizedString(self, comment: "\(self) could not be Localizable.strings")
+        guard let localizedBundle = Bundle.localizedBundle() else { return "" }
+        return NSLocalizedString(
+            self,
+            bundle: localizedBundle,
+            comment: "\(self) could not be Localizable.strings")
     }
 }
