@@ -184,6 +184,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return header
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let type = viewModel?.getSectionViewModel(at: indexPath.row)
+        let albumDetailsViewController = AlbumDetailViewController()
+        switch type {
+        case .newRelseasedAlbums(_, let dataModel):
+            self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
+        case .featuredPlaylists(_, let dataModel):
+            break
+        case .recommended(_, let dataModel):
+            break
+        default:
+            break
+        }
+    }
     
 }
 //MARK: - Compositional Layout Setting

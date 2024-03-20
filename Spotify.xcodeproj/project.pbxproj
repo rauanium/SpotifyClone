@@ -30,6 +30,7 @@
 		91D1A9192BA9DA49007C48D3 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9182BA9DA49007C48D3 /* BaseViewController.swift */; };
 		91D1A91C2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */; };
 		91D1A91E2BAACDEE007C48D3 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */; };
+		91D1A9212BAADA0A007C48D3 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9202BAADA0A007C48D3 /* AlbumDetailViewController.swift */; };
 		91DB8B1E2B8F16EF00EFEF7C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */; };
 		91DB8B202B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */; };
 		91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */; };
@@ -85,6 +86,7 @@
 		91D1A9182BA9DA49007C48D3 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		91D1A91B2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryProtocol.swift; sourceTree = "<group>"; };
 		91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		91D1A9202BAADA0A007C48D3 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
 		91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluginConfig.swift; sourceTree = "<group>"; };
 		91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerPlugin.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		91BF96F42B871A5500CA5CE0 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				91D1A91F2BAAD9EC007C48D3 /* AlbumDetail */,
 				91E2C1692B91B38600B8A1F9 /* Profile */,
 				91E2C1622B91AFBC00B8A1F9 /* Settings */,
 				91A17AE02B87402A00729FA1 /* Auth */,
@@ -305,6 +308,14 @@
 				91D1A91D2BAACDEE007C48D3 /* AuthRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		91D1A91F2BAAD9EC007C48D3 /* AlbumDetail */ = {
+			isa = PBXGroup;
+			children = (
+				91D1A9202BAADA0A007C48D3 /* AlbumDetailViewController.swift */,
+			);
+			path = AlbumDetail;
 			sourceTree = "<group>";
 		};
 		91DB8B1C2B8F16D700EFEF7C /* GlobalData */ = {
@@ -683,6 +694,7 @@
 				9194AB542B8F830600DADCF8 /* BaseTargetType.swift in Sources */,
 				91E019072B7E01420017FCF2 /* RecomendedModel.swift in Sources */,
 				9132D68F2B999B8400E27046 /* HomeSectionType.swift in Sources */,
+				91D1A9212BAADA0A007C48D3 /* AlbumDetailViewController.swift in Sources */,
 				91A17AD82B871C9200729FA1 /* SearchViewController.swift in Sources */,
 				91F94E722B7CA94E00994574 /* HomeViewController.swift in Sources */,
 				91EC310A2BA369DD00446877 /* SectionHeaderView.swift in Sources */,

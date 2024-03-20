@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+protocol AuthRepositoryProtocol {
+    func save(accessToken: String)
+    func getAccessToken() -> String?
+    func removeAccessToken()
+    func removeAllTokens()
+}

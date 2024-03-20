@@ -11,7 +11,8 @@ import SwiftKeychainWrapper
 
 final class AuthManager {
     static let shared = AuthManager()
-    private let keychainWrapper: KeychainWrapper = .standard
+    private var authRepository: AuthRepositoryProtocol = AuthRepository()
+    private var keychainWrapper: KeychainWrapper = .standard
     private let provider = MoyaProvider<AuthTarget>(
         plugins: [
             NetworkLoggerPlugin(configuration: NetworkLoggerPluginConfig.prettyLogging),
@@ -46,7 +47,7 @@ final class AuthManager {
     private init(){}
     
     private var accessToken: String? {
-        return keychainWrapper.string(forKey: "accessToken")
+        return authRepository.getAccessToken()
         
     }
     
@@ -147,7 +148,7 @@ final class AuthManager {
     }
     
     private func cacheToken(result: AuthResponse) {
-        keychainWrapper.set(result.accessToken, forKey: "accessToken")
+        authRepository.save(accessToken: result.accessToken)
         
         if let refreshToken = result.refreshToken {
             keychainWrapper.set(refreshToken, forKey: "refreshToken")
@@ -156,7 +157,7 @@ final class AuthManager {
     }
     
     func removeTokens() {
-        keychainWrapper.remove(forKey: "accessToken")
+        authRepository.removeAccessToken()
         keychainWrapper.remove(forKey: "refreshToken")
     }
     
