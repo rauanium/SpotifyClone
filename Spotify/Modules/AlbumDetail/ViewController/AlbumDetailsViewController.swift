@@ -8,8 +8,19 @@
 import UIKit
 import SnapKit
 
-class AlbumDetailViewController: BaseViewController {
+class AlbumDetailsViewController: BaseViewController {
     var albumID: String?
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        return contentView
+    }()
     
     private lazy var albumCover = ImageFactory.createImage(
         width: 150,
@@ -49,7 +60,7 @@ class AlbumDetailViewController: BaseViewController {
     
     private lazy var artistCover = ImageFactory.createImage(
         contentMode: .scaleAspectFill,
-        imageNamed: UIImage(named: "AppIcon"),
+        imageNamed: UIImage(named: "cover4"),
         isSkeletonable: true
     )
     
@@ -72,7 +83,7 @@ class AlbumDetailViewController: BaseViewController {
     private lazy var albumActionStack = StackFactory.createStack(
         axis: .horizontal,
         alignment: .center,
-        distribution: .fillProportionally,
+        distribution: .equalCentering,
         isSkeletonable: true
     )
     
@@ -84,14 +95,16 @@ class AlbumDetailViewController: BaseViewController {
     )
     
     private lazy var favoriteImage = ImageFactory.createImage(
+        contentMode: .scaleAspectFill,
         cornerRadius: 0,
-        imageNamed: UIImage(systemName: "heart"),
+        imageNamed: UIImage(systemName: "heart")?.withTintColor(.white, renderingMode: .alwaysOriginal),
         isSkeletonable: true
     )
     
     private lazy var shareImage = ImageFactory.createImage(
+        contentMode: .scaleAspectFit,
         cornerRadius: 0,
-        imageNamed: UIImage(systemName: "square.and.arrow.up"),
+        imageNamed: UIImage(systemName: "square.and.arrow.up")?.withTintColor(.white, renderingMode: .alwaysOriginal),
         isSkeletonable: true
     )
 
@@ -103,10 +116,23 @@ class AlbumDetailViewController: BaseViewController {
     )
     
     private lazy var playPauseImage = ImageFactory.createImage(
+        width: 56,
+        height: 56,
         cornerRadius: 0,
         imageNamed: UIImage(named: "playImage"),
         isSkeletonable: true
     )
+    
+    private lazy var songsTableView: ContentSizedTableView = {
+        let songsTableView = ContentSizedTableView()
+        songsTableView.backgroundColor = .clear
+        songsTableView.delegate = self
+        songsTableView.dataSource = self
+        songsTableView.register(AlbumSongsTableViewCell.self, forCellReuseIdentifier: AlbumSongsTableViewCell.identifier)
+        songsTableView.separatorStyle = .none
+        songsTableView.showsVerticalScrollIndicator = false
+        return songsTableView
+    }()
     
     
     //MARK: - Lifecycle
@@ -125,6 +151,7 @@ class AlbumDetailViewController: BaseViewController {
         super.viewWillDisappear(animated)
         resetNavigationBar()
     }
+    
     
     //MARK: - Gradient
     private func setupGradient() {
@@ -156,6 +183,7 @@ class AlbumDetailViewController: BaseViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.prefersLargeTitles = false
         
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"), style: .plain, target: self, action: #selector(didTapBackButton))
         
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
@@ -166,6 +194,7 @@ class AlbumDetailViewController: BaseViewController {
     private func resetNavigationBar() {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
+        
         navigationBarAppearance.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
@@ -186,11 +215,15 @@ class AlbumDetailViewController: BaseViewController {
 }
 
 //MARK: - Setup Views
-extension AlbumDetailViewController {
+extension AlbumDetailsViewController {
     private func setupViews() {
         view.backgroundColor = .mainBackground
-        [albumCover, albumInfoStack, albumActionStack].forEach {
-            view.addSubview($0)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+         
+        [albumCover, albumInfoStack, albumActionStack, songsTableView].forEach {
+            contentView.addSubview($0)
         }
         
         [albumName, albumDescription, artistStack, albumDuration].forEach {
@@ -209,15 +242,27 @@ extension AlbumDetailViewController {
             albumIconStack.addArrangedSubview($0)
         }
         
+        scrollView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        contentView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.centerX.equalTo(scrollView.snp.centerX)
+        }
+        
+        artistCover.layer.cornerRadius = artistCover.frame.size.width / 2
+        
         albumCover.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
+            make.top.equalToSuperview().offset(16)
             make.centerX.equalToSuperview()
         }
         
         albumInfoStack.snp.makeConstraints { make in
             make.top.equalTo(albumCover.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(120)
+            make.height.equalTo(100)
         }
         
         artistStack.snp.makeConstraints { make in
@@ -236,7 +281,7 @@ extension AlbumDetailViewController {
         }
         
         albumIconStack.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+            make.width.equalTo(120)
             make.height.equalTo(100)
             
         }
@@ -245,18 +290,72 @@ extension AlbumDetailViewController {
             make.height.equalTo(56)
         }
         favoriteImage.snp.makeConstraints { make in
-            make.width.equalTo(24)
-            make.height.equalTo(24)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
         }
         
         shareImage.snp.makeConstraints { make in
-            make.width.equalTo(24)
-            make.height.equalTo(24)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
         }
         moreImage.snp.makeConstraints { make in
-            make.width.equalTo(22)
-            make.height.equalTo(24)
+            make.width.equalTo(18)
+            make.height.equalTo(30)
+        }
+        
+        songsTableView.snp.makeConstraints { make in
+            make.top.equalTo(albumActionStack.snp.bottom)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(contentView.snp.bottom)
+        }
+    }
+}
+
+//MARK: - UITableViewDelegate DataSource
+
+extension AlbumDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = songsTableView.dequeueReusableCell(withIdentifier: AlbumSongsTableViewCell.identifier,
+                                                      for: indexPath) as! AlbumSongsTableViewCell
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
+    
+    
+}
+extension AlbumDetailsViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y < 280){
+            navigationItem.title = ""
+        }
+        else {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor.white
+            ]
+            
+            navigationBarAppearance.backgroundColor = .clear
+            navigationBarAppearance.shadowColor = .clear
+            
+            navigationController?.navigationBar.prefersLargeTitles = false
+            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            navigationItem.title = "All the stars"
+            
+            
         }
         
     }
+    
+    
 }

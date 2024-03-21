@@ -55,10 +55,10 @@ class HomeViewController: BaseViewController {
         viewModel?.didLoad()
         dispatchGroup.leave()
         
-        dispatchGroup.enter()
-        viewModel?.loadRecomended(completion: {
-            self.dispatchGroup.leave()
-        })
+//        dispatchGroup.enter()
+//        viewModel?.loadRecomended(completion: {
+//            self.dispatchGroup.leave()
+//        })
 
         dispatchGroup.enter()
         viewModel?.loadFeaturedPlaylists(completion: {
@@ -186,7 +186,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let type = viewModel?.getSectionViewModel(at: indexPath.row)
-        let albumDetailsViewController = AlbumDetailViewController()
+        let albumDetailsViewController = AlbumDetailsViewController()
         switch type {
         case .newRelseasedAlbums(_, let dataModel):
             albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
