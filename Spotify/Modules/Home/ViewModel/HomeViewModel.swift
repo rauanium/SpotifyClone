@@ -11,7 +11,7 @@ class HomeViewModel {
     
     private lazy var sections = [HomeSectionType]()
     
-    var numberOfSections :Int {
+    var numberOfSections: Int {
         return sections.count
     }
     

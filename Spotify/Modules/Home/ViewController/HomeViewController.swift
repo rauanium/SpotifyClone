@@ -14,6 +14,7 @@ class HomeViewController: BaseViewController {
     let dispatchGroup = DispatchGroup()
     
     private lazy var compositionLayout: UICollectionView = {
+        
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
             self.createCompostionalLayout(section: sectionIndex)
         }
@@ -22,7 +23,7 @@ class HomeViewController: BaseViewController {
         compositionLayout.delegate = self
         compositionLayout.dataSource = self
         compositionLayout.showsVerticalScrollIndicator = false
-        compositionLayout.showsVerticalScrollIndicator = false
+        compositionLayout.showsHorizontalScrollIndicator = false
         compositionLayout.backgroundColor = .clear
         compositionLayout.register(AlbumsAndPlaylistsCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         compositionLayout.register(RecommendedCollectionViewCell.self, forCellWithReuseIdentifier: "recommendedCell")
@@ -55,10 +56,10 @@ class HomeViewController: BaseViewController {
         viewModel?.didLoad()
         dispatchGroup.leave()
         
-//        dispatchGroup.enter()
-//        viewModel?.loadRecomended(completion: {
-//            self.dispatchGroup.leave()
-//        })
+        dispatchGroup.enter()
+        viewModel?.loadRecomended(completion: {
+            self.dispatchGroup.leave()
+        })
 
         dispatchGroup.enter()
         viewModel?.loadFeaturedPlaylists(completion: {
@@ -185,12 +186,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return header
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let type = viewModel?.getSectionViewModel(at: indexPath.row)
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
         let albumDetailsViewController = AlbumDetailsViewController()
         switch type {
         case .newRelseasedAlbums(_, let dataModel):
+            let play = PlaylistDetailsViewController()
             albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
-            self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
+            self.navigationController?.pushViewController(play, animated: true)
         case .featuredPlaylists(_, let dataModel):
             albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
             self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
@@ -199,8 +201,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         default:
             break
         }
-    }
-    
+    } 
 }
 //MARK: - Compositional Layout Setting
 extension HomeViewController {

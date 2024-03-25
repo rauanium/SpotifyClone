@@ -243,8 +243,9 @@ extension AlbumDetailsViewController {
         }
         
         scrollView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.bottom.equalToSuperview()
+            
         }
         contentView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -262,7 +263,7 @@ extension AlbumDetailsViewController {
         albumInfoStack.snp.makeConstraints { make in
             make.top.equalTo(albumCover.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(100)
+            make.height.equalTo(120)
         }
         
         artistStack.snp.makeConstraints { make in
@@ -277,7 +278,7 @@ extension AlbumDetailsViewController {
         albumActionStack.snp.makeConstraints { make in
             make.top.equalTo(albumInfoStack.snp.bottom)
             make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(100)
+            make.height.equalTo(90)
         }
         
         albumIconStack.snp.makeConstraints { make in
