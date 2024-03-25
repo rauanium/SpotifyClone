@@ -31,7 +31,6 @@ final class ProfileManager {
                     let res = try JSONDecoder().decode(UserProfileModel.self, from: response.data)
 //                    print("SUCCESS: \(res)")
                     DispatchQueue.main.async {
-                        print("SUCCESS: \(res)")
                         completion(res)
                     }
                 }

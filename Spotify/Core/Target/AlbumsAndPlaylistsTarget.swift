@@ -41,11 +41,11 @@ extension AlbumsAndPlaylistsTarget: BaseTargetType {
                                                    "offset": 0],
                                     encoding: URLEncoding.default)
         case .getNewReleases:
-            return .requestParameters(parameters: ["limit" : 5,
+            return .requestParameters(parameters: ["limit" : 10,
                                                    "offset": 0],
                                       encoding: URLEncoding.default)
         case .getRecommendations(let genres):
-            return .requestParameters(parameters: ["limit": 5,
+            return .requestParameters(parameters: ["limit": 10,
                                                 "offset": 0,
                                                 "seed_genres": genres],
                                       encoding: URLEncoding.default)

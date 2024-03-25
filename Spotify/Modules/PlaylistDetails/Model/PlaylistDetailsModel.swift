@@ -13,5 +13,5 @@ struct PlaylistDetailsModel {
     let description: String
     let artistImage: String
     let artistName: String
-    let duration: String
+    let duration: Int
 }

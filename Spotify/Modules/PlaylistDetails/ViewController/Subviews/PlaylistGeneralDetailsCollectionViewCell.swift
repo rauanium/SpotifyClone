@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PlaylistGeneralDetailsCollectionViewCell"
     private lazy var albumCover = ImageFactory.createImage(
-        width: 150,
-        height: 150,
+        width: 120,
+        height: 120,
         imageNamed: UIImage(named: "cover3"),
         isSkeletonable: true
     )
@@ -148,6 +149,8 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
         artistCover.layer.cornerRadius = artistCover.frame.size.width / 2
         
         albumCover.snp.makeConstraints { make in
+            make.width.equalTo(220)
+            make.height.equalTo(220)
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
         }
@@ -197,5 +200,13 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    func configure(data: PlaylistDetailsModel) {
+        let imageURL = URL(string: data.image)
+        albumCover.kf.setImage(with: imageURL)
+        albumDescription.text = data.description
+        albumName.text = data.name
+        artistName.text = data.artistName
+        albumDuration.text = "\(data.duration)"
+    }
     
 }

@@ -95,4 +95,9 @@ class AlbumSongsTableViewCell: UITableViewCell {
         
     }
     
+    func configure(data: AlbumTracksItem, index: Int) {
+        songTitleLabel.text = data.name
+        songArtistLabel.text = data.artists.first?.name
+        songNumberLabel.text = "\(index)"
+    }
 }

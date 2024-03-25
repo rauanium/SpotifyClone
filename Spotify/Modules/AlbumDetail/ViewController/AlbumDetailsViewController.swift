@@ -7,9 +7,16 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class AlbumDetailsViewController: BaseViewController {
     var albumID: String?
+    var viewModel: AlbumDetailsViewModel?
+    private lazy var albumTracks: [AlbumTracksItem] = []{
+        didSet{
+            self.songsTableView.reloadData()
+        }
+    }
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.delegate = self
@@ -42,13 +49,13 @@ class AlbumDetailsViewController: BaseViewController {
         isSkeletonable: true
     )
     
-    private lazy var albumDescription = LabelFactory.createLabel(
-        text: "The essential tracks, all in one playlist.",
-        font: UIFont.systemFont(ofSize: 13),
-        textColor: .subtitle,
-        numberOfLines: 1,
-        isSkeletonable: true
-    )
+//    private lazy var albumDescription = LabelFactory.createLabel(
+//        text: "The essential tracks, all in one playlist.",
+//        font: UIFont.systemFont(ofSize: 13),
+//        textColor: .subtitle,
+//        numberOfLines: 1,
+//        isSkeletonable: true
+//    )
     
     private lazy var artistStack = StackFactory.createStack(
         axis: .horizontal,
@@ -140,6 +147,7 @@ class AlbumDetailsViewController: BaseViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupViews()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +160,36 @@ class AlbumDetailsViewController: BaseViewController {
         resetNavigationBar()
     }
     
+    private func setupViewModel() {
+        viewModel = AlbumDetailsViewModel()
+        guard let albumID else { return }
+        viewModel?.loadAlbumDetails(id: albumID, completion: { [weak self] result in
+            DispatchQueue.main.async {
+//                self?.albumDescription.text = result.description
+                let imageURL = URL(string: result.images.first?.url ?? "")
+                self?.albumCover.kf.setImage(with: imageURL)
+                self?.albumName.text = result.name
+                self?.artistName.text = result.artists.first?.name
+                var totalDuration = 0
+                result.tracks.items.forEach { duration in
+                    totalDuration += duration.durationMS
+                }
+                let totalTracks = result.totalTracks
+                
+                let h = totalDuration / 3600000
+                let m = (totalDuration % 3600000) / 60000
+                let s = ((totalDuration % 3600000) % 60000) / 1000
+                if h != 0{
+                    self?.albumDuration.text = " \(totalTracks) tracks • \(h)h \(m)m \(s)s"
+                } else {
+                    self?.albumDuration.text = "\(totalTracks) tracks • \(m)m \(s)s"
+                }
+                self?.albumTracks = result.tracks.items
+                
+                
+            }
+        })
+    }
     
     //MARK: - Gradient
     private func setupGradient() {
@@ -226,7 +264,7 @@ extension AlbumDetailsViewController {
             contentView.addSubview($0)
         }
         
-        [albumName, albumDescription, artistStack, albumDuration].forEach {
+        [albumName, artistStack, albumDuration].forEach {
             albumInfoStack.addArrangedSubview($0)
         }
         
@@ -251,6 +289,15 @@ extension AlbumDetailsViewController {
             make.top.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
             make.centerX.equalTo(scrollView.snp.centerX)
+        }
+        
+        albumCover.snp.makeConstraints { make in
+            make.width.equalTo(220)
+            make.height.equalTo(220)
+        }
+        artistCover.snp.makeConstraints { make in
+            make.height.equalTo(24)
+            make.width.equalTo(24)
         }
         
         artistCover.layer.cornerRadius = artistCover.frame.size.width / 2
@@ -316,13 +363,14 @@ extension AlbumDetailsViewController {
 
 extension AlbumDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return albumTracks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = songsTableView.dequeueReusableCell(withIdentifier: AlbumSongsTableViewCell.identifier,
                                                       for: indexPath) as! AlbumSongsTableViewCell
-        
+        let trackData = albumTracks[indexPath.row]
+        cell.configure(data: trackData, index: indexPath.row + 1)
         return cell
     }
     
@@ -351,7 +399,7 @@ extension AlbumDetailsViewController: UIScrollViewDelegate {
             navigationController?.navigationBar.standardAppearance = navigationBarAppearance
             navigationController?.navigationBar.compactAppearance = navigationBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
-            navigationItem.title = "All the stars"
+            navigationItem.title = albumName.text
             
             
         }

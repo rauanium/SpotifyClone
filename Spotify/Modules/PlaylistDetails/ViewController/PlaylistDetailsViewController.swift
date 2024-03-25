@@ -8,6 +8,10 @@
 import UIKit
 
 class PlaylistDetailsViewController: UIViewController {
+    var viewModel: PlaylistDetailsViewModel?
+    var playlistID: String?
+    
+//    var sections = PlaylistDetailsViewModel.shared.items
     
     private lazy var compostionalLayout: UICollectionView = {
         let compositionalLayout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
@@ -31,6 +35,7 @@ class PlaylistDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupViews()
+        getPlaylistDetailsViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +46,17 @@ class PlaylistDetailsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         resetNavigationBar()
+    }
+    
+    private func getPlaylistDetailsViewModel() {
+        viewModel = PlaylistDetailsViewModel()
+        viewModel?.didLoad()
+        
+        guard let playlistID else { return }
+        
+        viewModel?.loadPlaylistDetails(id: playlistID, completion:{
+            self.compostionalLayout.reloadData()
+        })
     }
     
     //MARK: - Gradient
@@ -198,25 +214,31 @@ extension PlaylistDetailsViewController {
 
 extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return viewModel?.numberOfSections ?? 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return 10
+        let type = viewModel?.getSectionViewModel(at: section)
+        switch type {
+        case .general(let dataModel):
+            return dataModel.count
+        case .playlistSongs:
+            return 0
         default:
-            return 4
+            return 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaylistGeneralDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistGeneralDetailsCollectionViewCell
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        
+        switch type {
+        case .general(let dataModel):
+            let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistGeneralDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistGeneralDetailsCollectionViewCell
+            
+            cell.configure(data: dataModel[indexPath.row])
+            print("indexPath.row \(indexPath.row)")
             return cell
-        case 1:
+        case .playlistSongs(let dataModel):
             let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistDetailsCollectionViewCell
             return cell
         default:
