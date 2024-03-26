@@ -160,5 +160,4 @@ final class AuthManager {
         authRepository.removeAccessToken()
         keychainWrapper.remove(forKey: "refreshToken")
     }
-    
 }

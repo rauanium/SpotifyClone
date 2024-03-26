@@ -15,9 +15,11 @@ extension ProfileTargetType: BaseTargetType {
     var baseURL: URL {
         return URL(string: "https://api.spotify.com")!
     }
+    
     var path: String {
         return "/v1/me"
     }
+    
     var headers: [String : String]? {
         var header = [String: String]()
         AuthManager.shared.withValidToken { token in
@@ -25,5 +27,4 @@ extension ProfileTargetType: BaseTargetType {
         }
         return header
     }
-    
 }

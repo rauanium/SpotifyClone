@@ -17,6 +17,7 @@ extension AlbumAndPlylistItemTarget: BaseTargetType {
     var baseURL: URL {
         return URL(string: GlobalConstants.albumsAndPlaylistsBaseURL)!
     }
+    
     var path: String {
         switch self {
         case .getAlbumsItems(let id):
@@ -25,7 +26,6 @@ extension AlbumAndPlylistItemTarget: BaseTargetType {
             return "/v1/playlists/\(id)"
        
         }
-        
     }
     
     var task: Moya.Task {
@@ -34,7 +34,6 @@ extension AlbumAndPlylistItemTarget: BaseTargetType {
             return .requestPlain
         case .getPlaylistItems:
             return .requestPlain
-        
         }
     }
     
@@ -45,5 +44,4 @@ extension AlbumAndPlylistItemTarget: BaseTargetType {
         }
         return header
     }
-    
 }

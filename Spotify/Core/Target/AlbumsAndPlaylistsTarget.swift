@@ -19,6 +19,7 @@ extension AlbumsAndPlaylistsTarget: BaseTargetType {
     var baseURL: URL {
         return URL(string: GlobalConstants.albumsAndPlaylistsBaseURL)!
     }
+    
     var path: String {
         switch self {
         case .featuredPlaylists:
@@ -30,7 +31,6 @@ extension AlbumsAndPlaylistsTarget: BaseTargetType {
         case .getRecommendedGenres:
             return "/v1/recommendations/available-genre-seeds"
         }
-        
     }
     
     var task: Moya.Task {
@@ -61,5 +61,4 @@ extension AlbumsAndPlaylistsTarget: BaseTargetType {
         }
         return header
     }
-    
 }

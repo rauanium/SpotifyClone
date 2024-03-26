@@ -10,16 +10,4 @@ import Foundation
 enum PlaylistSection {
     case general(dataModel: [PlaylistDetailsModel])
     case playlistSongs(dataModel: [PlaylistSongDetailsDataModel])
-    
-//    var items: [PlaylistDataModel] {
-//        switch self {
-//        case .general(let dataModel),
-//                .playlistSongs(let dataModel):
-//            return dataModel
-//        }
-//    }
-//    
-//    var count: Int {
-//        return items.count
-//    }
 }

@@ -14,7 +14,6 @@ struct AuthResponse: Decodable {
     let scope: String
     let tokenType: String
     
-    
     enum CodingKeys: String, CodingKey  {
         case accessToken = "access_token"
         case expiresIn = "expires_in"

@@ -185,6 +185,7 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(56)
             make.height.equalTo(56)
         }
+        
         favoriteImage.snp.makeConstraints { make in
             make.width.equalTo(30)
             make.height.equalTo(30)
@@ -194,6 +195,7 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
+        
         moreImage.snp.makeConstraints { make in
             make.width.equalTo(18)
             make.height.equalTo(30)
@@ -206,7 +208,14 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
         albumDescription.text = data.description
         albumName.text = data.name
         artistName.text = data.artistName
-        albumDuration.text = "\(data.duration)"
+        
+        let h = data.duration / 3600000
+        let m = (data.duration % 3600000) / 60000
+        let s = ((data.duration % 3600000) % 60000) / 1000
+        if h != 0{
+            self.albumDuration.text = " \(data.totalTracks) tracks • \(h)h \(m)m \(s)s"
+        } else {
+            self.albumDuration.text = "\(data.totalTracks) tracks • \(m)m \(s)s"
+        }
     }
-    
 }

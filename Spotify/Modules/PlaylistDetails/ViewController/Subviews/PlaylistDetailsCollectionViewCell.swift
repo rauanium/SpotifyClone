@@ -91,16 +91,12 @@ class PlaylistDetailsCollectionViewCell: UICollectionViewCell {
             make.right.equalToSuperview()
             make.centerY.equalTo(songTitleLabel).inset(8)
         }
-        
     }
-    
     
     func configure(data: PlaylistSongDetailsDataModel, index: Int) {
         songNumberLabel.text = "\(index)"
         songTitleLabel.text = data.songTitle
         songArtistLabel.text = data.songArtist
-        
     }
-    
 }
 

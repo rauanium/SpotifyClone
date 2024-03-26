@@ -9,15 +9,6 @@ import UIKit
 
 class PlaylistDetailsViewModel {
     private lazy var sections = [PlaylistSection]()
-//    static var shared = PlaylistDetailsViewModel()
-//    var details: PlaylistSection = {
-//        .general(dataModel: [])
-//    }()
-//    
-//    var playlistSongs: PlaylistSection = {
-//        .playlistSongs(dataModel: [])
-//    }()
-    
     var numberOfSections: Int {
         return sections.count
     }
@@ -41,7 +32,6 @@ class PlaylistDetailsViewModel {
                 
                 for index in 0..<response.tracks.total {
                     duration += response.tracks.items[index].track.duration
-                    
                 }
                 
                 playlistItems.append(.init(
@@ -50,7 +40,9 @@ class PlaylistDetailsViewModel {
                     description: response.description,
                     artistImage: response.images.first?.url ?? "",
                     artistName: response.owner.displayName,
-                    duration: duration ))
+                    duration: duration,
+                    totalTracks: response.tracks.total
+                ))
                 
                 if let index = self?.sections.firstIndex(where: {
                     if case .general = $0 {
@@ -69,7 +61,6 @@ class PlaylistDetailsViewModel {
                         songArtist: song.track.artists.first?.name ?? ""))
                 }
                 
-                
                 if let index = self?.sections.firstIndex(where: {
                     if case .playlistSongs = $0 {
                         return true
@@ -79,18 +70,8 @@ class PlaylistDetailsViewModel {
                 }) {
                     self?.sections[index] = .playlistSongs(dataModel: playlistSongs)
                 }
-                
-                
-                
-                
-//                self.details = (.general(dataModel: [.init(
-//                    image: response.images.first?.url ?? "",
-//                    name: response.name,
-//                    description: response.description,
-//                    artistImage: response.images.first?.url ?? "",
-//                    artistName: response.owner.displayName,
-//                    duration: response.tracks.first?.track.duration ?? 0)]))
                 completion()
+                
             case .failure(let error):
                 print(error)
                 completion()
@@ -98,14 +79,4 @@ class PlaylistDetailsViewModel {
         }
         
     }
-//    var items: [PlaylistSection] {
-//        [details, playlistSongs]
-//    }
 }
-//(
-//    image: response.images.first?.url,
-//name: response.name,
-//description: response.description,
-//artistImage: response.images.first?.url,
-//artistName: response.owner.displayName,
-//duration: response.tracks.first?.track.duration)

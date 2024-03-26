@@ -14,6 +14,7 @@ struct Playlists: Decodable {
     let items: [PlaylistItems]
     
 }
+
 struct PlaylistItems: Decodable {
     let images: [PlaylistImages]
     let name: String

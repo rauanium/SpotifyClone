@@ -14,7 +14,6 @@ struct AlbumsDataModel: Decodable {
     let items: [Playlist]
 }
 
-
 struct Playlist: Decodable {
     let id: String?
     let totalTracks: Int?
@@ -40,7 +39,6 @@ struct Playlist: Decodable {
         case name
     }
 }
-
 
 struct Artists: Decodable {
     let id: String?

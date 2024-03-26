@@ -11,8 +11,6 @@ class PlaylistDetailsViewController: UIViewController {
     var viewModel: PlaylistDetailsViewModel?
     var playlistID: String?
     
-//    var sections = PlaylistDetailsViewModel.shared.items
-    
     private lazy var compostionalLayout: UICollectionView = {
         let compositionalLayout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
             self.createCompositionalLayout(section: sectionIndex)
@@ -67,15 +65,12 @@ class PlaylistDetailsViewController: UIViewController {
             blue: 174.0/255.0,
             alpha: 1.0).cgColor
         let secondColor = UIColor.mainBackground.cgColor
-        
         let gradient = CAGradientLayer()
         gradient.colors = [firstColor, secondColor]
         gradient.locations = [0.0, 0.55]
         gradient.type = .axial
         gradient.frame = self.view.bounds
-        
         self.view.layer.insertSublayer(gradient, at: 0)
-        
     }
     
     //MARK: - SetupNavigation
@@ -230,9 +225,7 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = viewModel?.getSectionViewModel(at: indexPath.section)
-        
         switch type {
-            
         case .general(let dataModel):
             let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistGeneralDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistGeneralDetailsCollectionViewCell
             
@@ -240,22 +233,13 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
             print("indexPath.row \(indexPath.row)")
             return cell
             
-            
-            
         case .playlistSongs(let dataModel):
             let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistDetailsCollectionViewCell
             cell.configure(data: dataModel[indexPath.row], index: indexPath.row + 1)
             return cell
-            
-            
-            
+
         default:
             return UICollectionViewCell()
         }
-        
-        
     }
-    
-    
-    
 }
