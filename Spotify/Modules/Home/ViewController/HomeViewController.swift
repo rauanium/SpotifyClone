@@ -30,7 +30,6 @@ class HomeViewController: BaseViewController {
         compositionLayout.register(SectionHeaderView.self,
                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                    withReuseIdentifier: "sectionHeader")
-        
         compositionLayout.isSkeletonable = true
         return compositionLayout
     }()
@@ -41,6 +40,7 @@ class HomeViewController: BaseViewController {
         setupViewModel()
         setupNavigationBar()
     }
+    
     override func setupLanguage() {
         navigationItem.title = "Home".localized
     }
@@ -100,12 +100,9 @@ class HomeViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(didTapSettings))
         navigationItem.rightBarButtonItem?.tintColor = .white
         navigationItem.setBackBarItem()
-        
     }
     
-    
     private func setupViews() {
-        
         view.backgroundColor = .mainBackground
         navigationItem.title = "Home".localized
         
@@ -115,7 +112,6 @@ class HomeViewController: BaseViewController {
             make.top.bottom.equalTo(view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
         }
-
     }
     
     @objc
@@ -123,7 +119,6 @@ class HomeViewController: BaseViewController {
         let settings = SettingsViewController()
         settings.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(settings, animated: true)
-        
     }
 }
 
@@ -185,6 +180,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return header
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let type = viewModel?.getSectionViewModel(at: indexPath.section)
         let albumDetailsViewController = AlbumDetailsViewController()
@@ -196,18 +192,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
             self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
             
-            
-            
-            
         case .featuredPlaylists(_, let dataModel):
             play.playlistID = dataModel[indexPath.row].albumID
             print("playlistIDHP: \(dataModel[indexPath.row].albumID ?? "not found")")
             albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
             self.navigationController?.pushViewController(play, animated: true)
-            
-            
+
         case .recommended(_, _):
             break
+            
         default:
             break
         }
@@ -351,7 +344,6 @@ extension HomeViewController {
 extension HomeViewController: SkeletonCollectionViewDataSource {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
         let type = viewModel?.getSectionViewModel(at: indexPath.section)
-        
         switch type {
         case .newRelseasedAlbums:
             return "cell"
@@ -363,6 +355,7 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
             return ""
         }
     }
+    
     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
         return viewModel?.numberOfSections ?? 1
     }
@@ -381,5 +374,4 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
             return 1
         }
     }
-    
 }

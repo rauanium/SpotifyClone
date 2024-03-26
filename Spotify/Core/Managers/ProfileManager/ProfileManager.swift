@@ -21,15 +21,9 @@ final class ProfileManager {
     func getCurrentUserProfile(completion: @escaping (UserProfileModel)->Void) {
         provider.request(.getProfileInfo) { result in
             switch result {
-                case .success(let response):
-                
-//                guard let res = try? JSONDecoder().decode(UserProfileModel.self, from: response.data) else { return }
-//                completion(res)
-                
-                
+            case .success(let response):
                 do {
                     let res = try JSONDecoder().decode(UserProfileModel.self, from: response.data)
-//                    print("SUCCESS: \(res)")
                     DispatchQueue.main.async {
                         completion(res)
                     }
@@ -39,7 +33,7 @@ final class ProfileManager {
                 }
                 
             case .failure(_):
-                    break
+                break
             }
         }
     }
