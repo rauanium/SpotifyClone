@@ -9,7 +9,7 @@ import Foundation
 
 enum PlaylistSection {
     case general(dataModel: [PlaylistDetailsModel])
-    case playlistSongs(dataModel: [PlaylistDetailsModel])
+    case playlistSongs(dataModel: [PlaylistSongDetailsDataModel])
     
 //    var items: [PlaylistDataModel] {
 //        switch self {

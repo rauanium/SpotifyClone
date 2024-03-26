@@ -152,19 +152,32 @@ struct PlaylistDataModel: Decodable {
     let images: [PlaylistCoverImage]
     let name: String
     let owner: Owner
-    let tracks: [PlaylistDetailItems]
+    let tracks: PlaylistDetailItems
 }
 
 struct PlaylistDetailItems: Decodable  {
-    let track: PlaylistTrack
+    let items: [PlaylistTrack]
+    let total: Int
 }
 
+
 struct PlaylistTrack: Decodable  {
-    let artists: PlaylistArtists
+    let track: PlaylistTrackItemDetails
+}
+
+struct PlaylistTrackItemDetails: Decodable {
+    let artists: [PlaylistArtists]
     let duration: Int
     let name: String
     let id: String
+    enum CodingKeys: String, CodingKey {
+        case artists
+        case duration = "duration_ms"
+        case name
+        case id
+    }
 }
+
 
 struct PlaylistArtists: Decodable  {
     let name: String
@@ -208,7 +221,6 @@ struct Owner: Decodable {
 //  "tracks": {
 //    "items": [
 //      {
-//        
 //        "track": {
 //          "album": {
 //            "album_type": "compilation",
@@ -256,7 +268,6 @@ struct Owner: Decodable {
 //            }
 //          ],
 //          "duration_ms": 376000,
-//          
 //          "id": "4rzfv0JLZfVhOhbSQ8o5jZ",
 //          "track_number": 10,
 //        },

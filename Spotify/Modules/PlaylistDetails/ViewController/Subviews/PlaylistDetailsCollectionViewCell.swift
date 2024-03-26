@@ -94,5 +94,13 @@ class PlaylistDetailsCollectionViewCell: UICollectionViewCell {
         
     }
     
+    
+    func configure(data: PlaylistSongDetailsDataModel, index: Int) {
+        songNumberLabel.text = "\(index)"
+        songTitleLabel.text = data.songTitle
+        songArtistLabel.text = data.songArtist
+        
+    }
+    
 }
 

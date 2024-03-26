@@ -33,16 +33,24 @@ class PlaylistDetailsViewModel {
     
     func loadPlaylistDetails(id: String, completion: @escaping () -> ()) {
         var playlistItems: [PlaylistDetailsModel] = []
+        var playlistSongs: [PlaylistSongDetailsDataModel] = []
+        var duration = 0
         AlbumsAndPlaylistItemManager.shared.getPlaylistItems(id: id) {[weak self] result in
             switch result {
             case .success(let response):
+                
+                for index in 0..<response.tracks.total {
+                    duration += response.tracks.items[index].track.duration
+                    
+                }
+                
                 playlistItems.append(.init(
                     image: response.images.first?.url ?? "",
                     name: response.name,
                     description: response.description,
                     artistImage: response.images.first?.url ?? "",
                     artistName: response.owner.displayName,
-                    duration: response.tracks.first?.track.duration ?? 0 ))
+                    duration: duration ))
                 
                 if let index = self?.sections.firstIndex(where: {
                     if case .general = $0 {
@@ -54,7 +62,23 @@ class PlaylistDetailsViewModel {
                     self?.sections[index] = .general(dataModel: playlistItems)
                 }
                 
+                response.tracks.items.forEach { song in
+                    playlistSongs.append(.init(
+                        id: song.track.id,
+                        songTitle: song.track.name,
+                        songArtist: song.track.artists.first?.name ?? ""))
+                }
                 
+                
+                if let index = self?.sections.firstIndex(where: {
+                    if case .playlistSongs = $0 {
+                        return true
+                    } else {
+                        return false
+                    }
+                }) {
+                    self?.sections[index] = .playlistSongs(dataModel: playlistSongs)
+                }
                 
                 
                 

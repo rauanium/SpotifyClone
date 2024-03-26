@@ -221,8 +221,8 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
         switch type {
         case .general(let dataModel):
             return dataModel.count
-        case .playlistSongs:
-            return 0
+        case .playlistSongs(let dataModel):
+            return dataModel.count
         default:
             return 1
         }
@@ -232,15 +232,23 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
         let type = viewModel?.getSectionViewModel(at: indexPath.section)
         
         switch type {
+            
         case .general(let dataModel):
             let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistGeneralDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistGeneralDetailsCollectionViewCell
             
             cell.configure(data: dataModel[indexPath.row])
             print("indexPath.row \(indexPath.row)")
             return cell
+            
+            
+            
         case .playlistSongs(let dataModel):
             let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistDetailsCollectionViewCell
+            cell.configure(data: dataModel[indexPath.row], index: indexPath.row + 1)
             return cell
+            
+            
+            
         default:
             return UICollectionViewCell()
         }
