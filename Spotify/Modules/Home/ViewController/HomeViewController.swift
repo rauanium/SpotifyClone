@@ -183,23 +183,23 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let type = viewModel?.getSectionViewModel(at: indexPath.section)
-        let albumDetailsViewController = AlbumDetailsViewController()
-        let play = PlaylistDetailsViewController()
-        
         switch type {
         case .newRelseasedAlbums(_, let dataModel):
-            print("AlbumId: \(dataModel[indexPath.row].albumID ?? "not found")")
+            let albumDetailsViewController = AlbumDetailsViewController()
             albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
+            albumDetailsViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(albumDetailsViewController, animated: true)
             
         case .featuredPlaylists(_, let dataModel):
-            play.playlistID = dataModel[indexPath.row].albumID
-            print("playlistIDHP: \(dataModel[indexPath.row].albumID ?? "not found")")
-            albumDetailsViewController.albumID = dataModel[indexPath.row].albumID
-            self.navigationController?.pushViewController(play, animated: true)
+            let playlistDetailsViewController = PlaylistDetailsViewController()
+            playlistDetailsViewController.playlistID = dataModel[indexPath.row].albumID
+            playlistDetailsViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(playlistDetailsViewController, animated: true)
 
         case .recommended(_, _):
-            break
+            let trackPlayerViewController = TrackPlayerViewController()
+            trackPlayerViewController.modalPresentationStyle = .overFullScreen
+            present(trackPlayerViewController, animated: true)
             
         default:
             break
