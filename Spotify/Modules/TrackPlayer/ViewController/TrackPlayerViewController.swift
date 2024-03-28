@@ -6,8 +6,16 @@
 //
 
 import UIKit
+import AVFoundation
 
 class TrackPlayerViewController: UIViewController {
+    var playing: Bool = false
+    var timer: Timer = Timer()
+    var trackID: String?
+    var player: AVPlayer?
+    var trackData: RecomendedModel?
+    var viewModel: TrackPlayerViewModel?
+    let defaultTrackURL: URL = URL(string: "https://p.scdn.co/mp3-preview/b4e70a4b9cfc7e25c2ac9c6ec4325524ec84c1d1?cid=6046cf4a650c41f985b4ccf3ee4603e2")!
     
     private lazy var hideButton: UIButton = {
         let hideButton = UIButton()
@@ -18,8 +26,9 @@ class TrackPlayerViewController: UIViewController {
     }()
     
     private lazy var trackTitleHeader = LabelFactory.createLabel(
-        text: "All the stars",
-        font: UIFont.systemFont(ofSize: 13, weight: .bold)
+        text: trackData?.coverTitle,
+        font: UIFont.systemFont(ofSize: 13, weight: .bold),
+        textAlignment: .center
     )
     
     private lazy var coverImage = ImageFactory.createImage(
@@ -34,7 +43,6 @@ class TrackPlayerViewController: UIViewController {
     )
     
     private lazy var titleAndArtistStack = StackFactory.createStack(
-        spacing: 8,
         distribution: .fillProportionally
     )
     
@@ -63,7 +71,9 @@ class TrackPlayerViewController: UIViewController {
         let thimbImage = UIImage(systemName: "circle.fill", withConfiguration: configuration)
         trackSlider.setThumbImage(thimbImage, for: .highlighted)
         trackSlider.setThumbImage(thimbImage, for: .normal)
-        trackSlider.value = 0.0
+        trackSlider.minimumValue = 0.0
+        trackSlider.maximumValue = 29.0
+        
         trackSlider.tintColor = .white
         return trackSlider
     }()
@@ -71,7 +81,7 @@ class TrackPlayerViewController: UIViewController {
     private lazy var trackTimeStack = StackFactory.createStack(
         axis: .horizontal,
         distribution: .equalSpacing
-        )
+    )
     
     private lazy var startTime = LabelFactory.createLabel(
         text: "0:00",
@@ -79,7 +89,7 @@ class TrackPlayerViewController: UIViewController {
     )
     
     private lazy var finishTime = LabelFactory.createLabel(
-        text: "4:44",
+        text: "0:29",
         font: UIFont.systemFont(ofSize: 12)
     )
     
@@ -100,7 +110,7 @@ class TrackPlayerViewController: UIViewController {
     
     private lazy var playPauseButton: UIButton = {
         let playPauseButton = UIButton()
-        playPauseButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+        playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
         playPauseButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 56), forImageIn: .normal)
         playPauseButton.tintColor = .white
         playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
@@ -121,6 +131,28 @@ class TrackPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupViewModel()
+        playing = true
+        startTimer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupViewModel()
+    }
+    
+    private func setupViewModel() {
+        viewModel = TrackPlayerViewModel()
+        guard let trackDataID = trackData?.id else { return }
+        viewModel?.getTrackDetails(id: trackDataID, completion: { [weak self] trackURL in
+            if let songURL = trackURL {
+                self?.player = AVPlayer(url: songURL)
+                self?.player?.play()
+            } else {
+                self?.player = AVPlayer(url: self!.defaultTrackURL)
+                self?.player?.play()
+            }
+        })
     }
     
     //MARK: - Methods
@@ -137,12 +169,37 @@ class TrackPlayerViewController: UIViewController {
     
     @objc
     private func didTapPlayPause() {
-        print("play pause")
+        
+        if playing {
+            player?.pause()
+            playing = false
+            timer.invalidate()
+            playPauseButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+            
+        } else {
+            playing = true
+            player?.play()
+            playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+            startTimer()
+        }
     }
     
     @objc
     private func didTapNext() {
         print("next")
+    }
+    
+    private func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                self.trackSlider.value += 1
+                self.startTime.text = "0:\(String(format: "%.0f", self.trackSlider.value))"
+                self.finishTime.text = "0:\(String(format: "%.0f", 29 - self.trackSlider.value))"
+            }
+            if self.trackSlider.value == 29 {
+                timer.invalidate()
+            }
+        }
     }
 
 }
@@ -182,6 +239,9 @@ extension TrackPlayerViewController {
             trackControllersStack.addArrangedSubview($0)
         }
         
+        trackSlider.minimumValue = 0.0
+        trackSlider.maximumValue = 29.0
+        
         hideButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.equalToSuperview().inset(16)
@@ -190,13 +250,14 @@ extension TrackPlayerViewController {
         
         trackTitleHeader.snp.makeConstraints { make in
             make.top.equalTo(hideButton)
+            make.width.equalTo(280)
             make.centerX.equalToSuperview()
             make.centerY.equalTo(hideButton)
         }
         
         coverImage.snp.makeConstraints { make in
-            make.size.equalTo(340)
-            make.top.equalTo(trackTitleHeader.snp.bottom).offset(80)
+            make.left.right.equalToSuperview().inset(16)
+            make.top.equalTo(trackTitleHeader.snp.bottom).offset(60)
             make.centerX.equalToSuperview()
         }
         
@@ -204,7 +265,7 @@ extension TrackPlayerViewController {
             make.top.equalTo(coverImage.snp.bottom).offset(56)
             make.bottom.equalTo(trackSliderStack.snp.top).offset(-36)
             make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(40)
+            make.height.equalTo(50)
         }
         
         heartIcon.snp.makeConstraints { make in
@@ -226,5 +287,10 @@ extension TrackPlayerViewController {
             make.left.right.equalToSuperview().inset(48)
             make.height.equalTo(62)
         }
+        let imageURL = trackData?.coverImage
+        coverImage.kf.setImage(with: imageURL)
+        
+        trackTitle.text = trackData?.coverTitle
+        trackArtist.text = trackData?.coverSubtitle
     }
 }

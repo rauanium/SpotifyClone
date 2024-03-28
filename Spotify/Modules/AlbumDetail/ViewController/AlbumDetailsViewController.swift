@@ -11,6 +11,7 @@ import Kingfisher
 
 class AlbumDetailsViewController: BaseViewController {
     var albumID: String?
+    var imageURL: URL?
     var viewModel: AlbumDetailsViewModel?
     private lazy var albumTracks: [AlbumTracksItem] = []{
         didSet{
@@ -166,8 +167,8 @@ class AlbumDetailsViewController: BaseViewController {
         viewModel?.loadAlbumDetails(id: albumID, completion: { [weak self] result in
             DispatchQueue.main.async {
 //                self?.albumDescription.text = result.description
-                let imageURL = URL(string: result.images.first?.url ?? "")
-                self?.albumCover.kf.setImage(with: imageURL)
+                self?.imageURL = URL(string: result.images.first?.url ?? "")
+                self?.albumCover.kf.setImage(with: self?.imageURL)
                 self?.albumName.text = result.name
                 self?.artistName.text = result.artists.first?.name
                 var totalDuration = 0
@@ -187,7 +188,12 @@ class AlbumDetailsViewController: BaseViewController {
                 self?.albumTracks = result.tracks.items
                 
                 
+                
             }
+            for i in 0..<result.totalTracks {
+                print("albumTrackIDs: \(result.tracks.items[i].id)")
+            }
+            
         })
     }
     
@@ -376,6 +382,17 @@ extension AlbumDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = .clear
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let trackPlayerViewController = TrackPlayerViewController()
+        trackPlayerViewController.trackData = .init(
+            id: albumTracks[indexPath.row].id,
+            coverImage: imageURL,
+            coverTitle: albumTracks[indexPath.row].name,
+            coverSubtitle: albumTracks[indexPath.row].artists.first?.name)
+        trackPlayerViewController.modalPresentationStyle = .overFullScreen
+        present(trackPlayerViewController, animated: true)
     }
     
     

@@ -47,6 +47,10 @@
 		91D1A9252BAAF673007C48D3 /* StackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9242BAAF673007C48D3 /* StackFactory.swift */; };
 		91D956192BB3014800177244 /* PlaylistSongDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D956182BB3014800177244 /* PlaylistSongDetailsDataModel.swift */; };
 		91DA51492BB41B2600905EA4 /* TrackPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */; };
+		91DA514E2BB48FD900905EA4 /* TrackTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA514D2BB48FD900905EA4 /* TrackTarget.swift */; };
+		91DA51502BB490C200905EA4 /* TrackDetailsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA514F2BB490C200905EA4 /* TrackDetailsManager.swift */; };
+		91DA51522BB4913E00905EA4 /* TrackDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA51512BB4913E00905EA4 /* TrackDetailsModel.swift */; };
+		91DA51542BB4932000905EA4 /* TrackPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA51532BB4932000905EA4 /* TrackPlayerViewModel.swift */; };
 		91DB8B1E2B8F16EF00EFEF7C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */; };
 		91DB8B202B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */; };
 		91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */; };
@@ -119,6 +123,10 @@
 		91D1A9242BAAF673007C48D3 /* StackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackFactory.swift; sourceTree = "<group>"; };
 		91D956182BB3014800177244 /* PlaylistSongDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongDetailsDataModel.swift; sourceTree = "<group>"; };
 		91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerViewController.swift; sourceTree = "<group>"; };
+		91DA514D2BB48FD900905EA4 /* TrackTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTarget.swift; sourceTree = "<group>"; };
+		91DA514F2BB490C200905EA4 /* TrackDetailsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailsManager.swift; sourceTree = "<group>"; };
+		91DA51512BB4913E00905EA4 /* TrackDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailsModel.swift; sourceTree = "<group>"; };
+		91DA51532BB4932000905EA4 /* TrackPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerViewModel.swift; sourceTree = "<group>"; };
 		91DB8B1D2B8F16EF00EFEF7C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		91DB8B1F2B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluginConfig.swift; sourceTree = "<group>"; };
 		91DB8B212B8F279700EFEF7C /* LoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerPlugin.swift; sourceTree = "<group>"; };
@@ -174,6 +182,7 @@
 				91E2C1732B91BD8700B8A1F9 /* ProfileTargetType.swift */,
 				91EC31002BA3688600446877 /* AlbumsAndPlaylistsTarget.swift */,
 				91479BD62BB16D1100D817CE /* AlbumAndPlylistItemTarget.swift */,
+				91DA514D2BB48FD900905EA4 /* TrackTarget.swift */,
 			);
 			path = Target;
 			sourceTree = "<group>";
@@ -440,9 +449,34 @@
 		91DA51472BB4163B00905EA4 /* TrackPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */,
+				91DA514A2BB4795500905EA4 /* ViewController */,
+				91DA514B2BB4796300905EA4 /* ViewModel */,
+				91DA514C2BB4796A00905EA4 /* Model */,
 			);
 			path = TrackPlayer;
+			sourceTree = "<group>";
+		};
+		91DA514A2BB4795500905EA4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		91DA514B2BB4796300905EA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				91DA51532BB4932000905EA4 /* TrackPlayerViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		91DA514C2BB4796A00905EA4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		91DB8B1C2B8F16D700EFEF7C /* GlobalData */ = {
@@ -578,6 +612,7 @@
 				91EC31042BA3698400446877 /* NewReleasedModel.swift */,
 				91EC31062BA369B300446877 /* RecommendedGenresModel.swift */,
 				91EC310B2BA36C6200446877 /* RecommendedAlbumsModel.swift */,
+				91DA51512BB4913E00905EA4 /* TrackDetailsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -603,6 +638,7 @@
 			children = (
 				91EC30FD2BA367B900446877 /* AlbumsAndPlaylistsManager.swift */,
 				91479BD82BB16ECB00D817CE /* AlbumsAndPlaylistItemManager.swift */,
+				91DA514F2BB490C200905EA4 /* TrackDetailsManager.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -803,6 +839,7 @@
 				91D1A9112BA9A80A007C48D3 /* LabelFactory.swift in Sources */,
 				91EC31032BA368B200446877 /* FeaturedPlaylistsModel.swift in Sources */,
 				91D1A9192BA9DA49007C48D3 /* BaseViewController.swift in Sources */,
+				91DA51522BB4913E00905EA4 /* TrackDetailsModel.swift in Sources */,
 				91E2C1722B91BD0900B8A1F9 /* ProfileManager.swift in Sources */,
 				91479BDB2BB178C200D817CE /* AlbumDetailsViewModel.swift in Sources */,
 				91E2C1682B91B1D700B8A1F9 /* UINavigationItemExtension.swift in Sources */,
@@ -826,6 +863,7 @@
 				91EC31072BA369B300446877 /* RecommendedGenresModel.swift in Sources */,
 				91EC31012BA3688600446877 /* AlbumsAndPlaylistsTarget.swift in Sources */,
 				91DB8B202B8F24C300EFEF7C /* NetworkLoggerPluginConfig.swift in Sources */,
+				91DA514E2BB48FD900905EA4 /* TrackTarget.swift in Sources */,
 				91E9DA572B88C8FD00DF1F21 /* AuthViewModel.swift in Sources */,
 				91C9F8FE2BAD8FA10090B1F6 /* PlaylistDataModel.swift in Sources */,
 				9194AB542B8F830600DADCF8 /* BaseTargetType.swift in Sources */,
@@ -842,8 +880,10 @@
 				91EC310C2BA36C6200446877 /* RecommendedAlbumsModel.swift in Sources */,
 				9153AFD32B7CB61300B7A805 /* AlbumsAndPlaylistsModel.swift in Sources */,
 				91D1A91E2BAACDEE007C48D3 /* AuthRepository.swift in Sources */,
+				91DA51542BB4932000905EA4 /* TrackPlayerViewModel.swift in Sources */,
 				91E2C1742B91BD8700B8A1F9 /* ProfileTargetType.swift in Sources */,
 				91C9F9022BADA6720090B1F6 /* PlaylistDetailsViewModel.swift in Sources */,
+				91DA51502BB490C200905EA4 /* TrackDetailsManager.swift in Sources */,
 				91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */,
 				914159742B8CEDF400BC456E /* AuthTarget.swift in Sources */,
 				918C082F2BAB3A3500FE7FC7 /* AlbumSongsTableViewCell.swift in Sources */,

@@ -242,4 +242,22 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
             return UICollectionViewCell()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        switch type {
+        case .playlistSongs(let dataModel):
+            let trackPlayerViewController = TrackPlayerViewController()
+            trackPlayerViewController.trackData = .init(
+                id: dataModel[indexPath.row].id,
+                coverImage: dataModel[indexPath.row].coverImage,
+                coverTitle: dataModel[indexPath.row].songTitle,
+                coverSubtitle: dataModel[indexPath.row].songArtist)
+            trackPlayerViewController.modalPresentationStyle = .overFullScreen
+            present(trackPlayerViewController, animated: true)
+
+        default:
+            break
+        }
+    }
 }

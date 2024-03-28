@@ -35,14 +35,13 @@ class PlaylistDetailsViewModel {
                 }
                 
                 playlistItems.append(.init(
-                    image: response.images.first?.url ?? "",
-                    name: response.name,
+                    playlistImage: response.images.first?.url,
+                    playlistName: response.name,
                     description: response.description,
-                    artistImage: response.images.first?.url ?? "",
-                    artistName: response.owner.displayName,
+                    artistImage: response.images.first?.url,
+                    artistName: response.tracks.items.first?.track.artists.first?.name ?? "",
                     duration: duration,
-                    totalTracks: response.tracks.total
-                ))
+                    totalTracks: response.tracks.total))
                 
                 if let index = self?.sections.firstIndex(where: {
                     if case .general = $0 {
@@ -58,7 +57,8 @@ class PlaylistDetailsViewModel {
                     playlistSongs.append(.init(
                         id: song.track.id,
                         songTitle: song.track.name,
-                        songArtist: song.track.artists.first?.name ?? ""))
+                        songArtist: song.track.artists.first?.name ?? "", 
+                        coverImage: song.track.album.images.first?.url))
                 }
                 
                 if let index = self?.sections.firstIndex(where: {

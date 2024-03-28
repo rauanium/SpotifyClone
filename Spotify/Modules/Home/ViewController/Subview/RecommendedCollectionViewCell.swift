@@ -117,7 +117,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Configure cell
     func configure(with data: RecomendedModel) {
-        let imageURL = URL(string: data.coverImage ?? "")
+        let imageURL = data.coverImage
         coverImage.kf.setImage(with: imageURL)
         coverTitle.text = data.coverTitle
         guard let subtitle = data.coverSubtitle else {

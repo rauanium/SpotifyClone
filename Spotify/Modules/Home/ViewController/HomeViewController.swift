@@ -196,8 +196,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             playlistDetailsViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(playlistDetailsViewController, animated: true)
 
-        case .recommended(_, _):
+        case .recommended(_, let dataModel):
             let trackPlayerViewController = TrackPlayerViewController()
+            trackPlayerViewController.trackData = dataModel[indexPath.row]
             trackPlayerViewController.modalPresentationStyle = .overFullScreen
             present(trackPlayerViewController, animated: true)
             

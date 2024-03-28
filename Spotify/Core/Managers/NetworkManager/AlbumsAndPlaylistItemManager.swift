@@ -46,6 +46,7 @@ final class AlbumsAndPlaylistItemManager {
                     let decodedData = try JSONDecoder().decode(PlaylistDataModel.self, from: response.data)
                     DispatchQueue.main.async {
                         completion(.success(decodedData))
+                        print("getPlaylistDEtails: \(decodedData)")
                     }
                 }
                 catch {

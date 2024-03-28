@@ -203,10 +203,10 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(data: PlaylistDetailsModel) {
-        let imageURL = URL(string: data.image)
+        let imageURL = data.artistImage
         albumCover.kf.setImage(with: imageURL)
         albumDescription.text = data.description
-        albumName.text = data.name
+        albumName.text = data.playlistName
         artistName.text = data.artistName
         
         let h = data.duration / 3600000

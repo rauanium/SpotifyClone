@@ -11,4 +11,5 @@ struct PlaylistSongDetailsDataModel {
     let id: String
     let songTitle: String
     let songArtist: String
+    let coverImage: URL?
 }

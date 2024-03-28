@@ -8,10 +8,10 @@
 import Foundation
 
 struct PlaylistDetailsModel {
-    let image: String
-    let name: String
+    let playlistImage: URL?
+    let playlistName: String
     let description: String
-    let artistImage: String
+    let artistImage: URL?
     let artistName: String
     let duration: Int
     let totalTracks: Int

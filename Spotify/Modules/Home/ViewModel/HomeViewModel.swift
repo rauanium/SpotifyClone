@@ -96,9 +96,14 @@ class HomeViewModel {
                 case .success(let response):
                     print("response \(response)")
                     response.forEach { track in
-                        recommended.append(.init(coverImage: track.album.images.first?.url,
-                                                 coverTitle: track.album.name,
-                                                 coverSubtitle: track.album.artists.first?.name))
+                        recommended.append(.init(
+                            id: track.id,
+                            coverImage: track.album.images.first?.url,
+                            coverTitle: track.name,
+                            coverSubtitle: track.album.artists.first?.name))
+//                        print("recommended PreviewURL: \(track.previewURL)")
+//                        print("album name: \(track.album.name)")
+                        
                     }
                     if let index = self?.sections.firstIndex(where: {
                         if case .recommended = $0 {
@@ -109,6 +114,8 @@ class HomeViewModel {
                     }) {
                         self?.sections[index] = .recommended(title: "Recommended".localized, datamodel: recommended)
                     }
+                    
+                    
                     
                     completion()
                 case .failure(let error):

@@ -13,6 +13,16 @@ struct RecommendedAlbumsModel: Decodable {
 
 struct Track: Decodable  {
     let album: RecomendedAlbumModel
+    let id: String
+    let name: String
+//    let previewURL: String
+    
+    enum CodingKeys: String, CodingKey {
+        case album
+        case id
+        case name
+//        case previewURL = "preview_url"
+    }
 }
 
 struct RecomendedAlbumModel: Decodable  {
@@ -23,7 +33,7 @@ struct RecomendedAlbumModel: Decodable  {
 }
 
 struct RecomendedImage: Decodable  {
-    let url: String
+    let url: URL?
 }
 
 struct RecommendedArtists: Decodable {

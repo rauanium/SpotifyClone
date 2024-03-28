@@ -26,6 +26,7 @@ struct PlaylistTrack: Decodable  {
 
 struct PlaylistTrackItemDetails: Decodable {
     let artists: [PlaylistArtists]
+    let album: PlaylistTrackAlbum
     let duration: Int
     let name: String
     let id: String
@@ -34,6 +35,7 @@ struct PlaylistTrackItemDetails: Decodable {
         case duration = "duration_ms"
         case name
         case id
+        case album
     }
 }
 
@@ -42,8 +44,12 @@ struct PlaylistArtists: Decodable  {
     let id: String
 }
 
+struct PlaylistTrackAlbum: Decodable {
+    let images: [PlaylistCoverImage]
+}
+
 struct PlaylistCoverImage: Decodable {
-    let url: String
+    let url: URL?
 }
 
 struct Owner: Decodable {
