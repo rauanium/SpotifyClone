@@ -25,7 +25,7 @@ class BaseViewController: UIViewController {
         navigationBarAppearance.largeTitleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
-        navigationBarAppearance.backgroundColor = .black
+        navigationBarAppearance.backgroundColor = .mainBackground
         
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.compactAppearance = navigationBarAppearance
