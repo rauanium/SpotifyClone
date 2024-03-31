@@ -60,13 +60,13 @@ class PlaylistDetailsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        songNumberLabel.text = nil
-//        songTitleLabel.text = nil
-//        songArtistLabel.text = nil
-//
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        songNumberLabel.text = nil
+        songTitleLabel.text = nil
+        songArtistLabel.text = nil
+
+    }
     
     //MARK: - SettingUp Cell
     private func setupViews() {

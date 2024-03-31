@@ -30,6 +30,7 @@
 		91A17ADF2B873E3F00729FA1 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17ADE2B873E3F00729FA1 /* WelcomeViewController.swift */; };
 		91A17AE22B87403B00729FA1 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A17AE12B87403B00729FA1 /* AuthViewController.swift */; };
 		91B558532BB99D43007769D5 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B558522BB99D43007769D5 /* SearchResultsViewController.swift */; };
+		91B558572BB9CED5007769D5 /* CategoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B558562BB9CED5007769D5 /* CategoriesCollectionViewCell.swift */; };
 		91C9F8F52BAD6CC20090B1F6 /* PlaylistDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C9F8F42BAD6CC20090B1F6 /* PlaylistDetailsViewController.swift */; };
 		91C9F8FC2BAD8E380090B1F6 /* PlaylistSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C9F8FB2BAD8E380090B1F6 /* PlaylistSection.swift */; };
 		91C9F8FE2BAD8FA10090B1F6 /* PlaylistDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C9F8FD2BAD8FA10090B1F6 /* PlaylistDataModel.swift */; };
@@ -108,6 +109,7 @@
 		91A17ADE2B873E3F00729FA1 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		91A17AE12B87403B00729FA1 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		91B558522BB99D43007769D5 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		91B558562BB9CED5007769D5 /* CategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		91C9F8F42BAD6CC20090B1F6 /* PlaylistDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsViewController.swift; sourceTree = "<group>"; };
 		91C9F8FB2BAD8E380090B1F6 /* PlaylistSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSection.swift; sourceTree = "<group>"; };
 		91C9F8FD2BAD8FA10090B1F6 /* PlaylistDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDataModel.swift; sourceTree = "<group>"; };
@@ -264,8 +266,7 @@
 		91A17AD52B871C7500729FA1 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				91A17AD72B871C9200729FA1 /* SearchViewController.swift */,
-				91B558522BB99D43007769D5 /* SearchResultsViewController.swift */,
+				91B558542BB9CEA1007769D5 /* ViewController */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -293,6 +294,24 @@
 				91E9DA542B88C8E600DF1F21 /* View */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		91B558542BB9CEA1007769D5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				91B558522BB99D43007769D5 /* SearchResultsViewController.swift */,
+				91A17AD72B871C9200729FA1 /* SearchViewController.swift */,
+				91B558552BB9CEAE007769D5 /* Subviews */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		91B558552BB9CEAE007769D5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				91B558562BB9CED5007769D5 /* CategoriesCollectionViewCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		91BF96F22B87197D00CA5CE0 /* Resources */ = {
@@ -895,6 +914,7 @@
 				91DB8B222B8F279700EFEF7C /* LoggerPlugin.swift in Sources */,
 				914159742B8CEDF400BC456E /* AuthTarget.swift in Sources */,
 				918C082F2BAB3A3500FE7FC7 /* AlbumSongsTableViewCell.swift in Sources */,
+				91B558572BB9CED5007769D5 /* CategoriesCollectionViewCell.swift in Sources */,
 				91F94E782B7CA94E00994574 /* Spotify.xcdatamodeld in Sources */,
 				91479BD72BB16D1100D817CE /* AlbumAndPlylistItemTarget.swift in Sources */,
 				91DB8B252B8F2E1D00EFEF7C /* APIResult.swift in Sources */,

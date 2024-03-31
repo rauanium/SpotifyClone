@@ -29,7 +29,7 @@ class SectionHeaderView: UICollectionReusableView {
     private func setupViews() {
         addSubview(headerLabel)
         headerLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.right.equalToSuperview().inset(8)
             make.top.bottom.equalToSuperview().inset(2)
         }
     }
