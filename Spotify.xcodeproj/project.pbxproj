@@ -45,6 +45,7 @@
 		91D1A9212BAADA0A007C48D3 /* AlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9202BAADA0A007C48D3 /* AlbumDetailsViewController.swift */; };
 		91D1A9232BAAF021007C48D3 /* ImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9222BAAF021007C48D3 /* ImageFactory.swift */; };
 		91D1A9252BAAF673007C48D3 /* StackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D1A9242BAAF673007C48D3 /* StackFactory.swift */; };
+		91D7653E2BB8255600DE5778 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D7653D2BB8255600DE5778 /* AudioManager.swift */; };
 		91D956192BB3014800177244 /* PlaylistSongDetailsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D956182BB3014800177244 /* PlaylistSongDetailsDataModel.swift */; };
 		91DA51492BB41B2600905EA4 /* TrackPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */; };
 		91DA514E2BB48FD900905EA4 /* TrackTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DA514D2BB48FD900905EA4 /* TrackTarget.swift */; };
@@ -121,6 +122,7 @@
 		91D1A9202BAADA0A007C48D3 /* AlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewController.swift; sourceTree = "<group>"; };
 		91D1A9222BAAF021007C48D3 /* ImageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactory.swift; sourceTree = "<group>"; };
 		91D1A9242BAAF673007C48D3 /* StackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackFactory.swift; sourceTree = "<group>"; };
+		91D7653D2BB8255600DE5778 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		91D956182BB3014800177244 /* PlaylistSongDetailsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongDetailsDataModel.swift; sourceTree = "<group>"; };
 		91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPlayerViewController.swift; sourceTree = "<group>"; };
 		91DA514D2BB48FD900905EA4 /* TrackTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTarget.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				91DA51482BB41B2600905EA4 /* TrackPlayerViewController.swift */,
+				91D7653D2BB8255600DE5778 /* AudioManager.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				9153AFD52B7CB65D00B7A805 /* HomeViewModel.swift in Sources */,
 				91C9F8F52BAD6CC20090B1F6 /* PlaylistDetailsViewController.swift in Sources */,
 				91D1A91C2BAACDDC007C48D3 /* AuthRepositoryProtocol.swift in Sources */,
+				91D7653E2BB8255600DE5778 /* AudioManager.swift in Sources */,
 				91C9F9002BAD9D630090B1F6 /* PlaylistDetailsCollectionViewCell.swift in Sources */,
 				91A17ADC2B87372E00729FA1 /* AuthManager.swift in Sources */,
 				91D1A9252BAAF673007C48D3 /* StackFactory.swift in Sources */,

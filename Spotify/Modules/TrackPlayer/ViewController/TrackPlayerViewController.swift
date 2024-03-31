@@ -9,10 +9,12 @@ import UIKit
 import AVFoundation
 
 class TrackPlayerViewController: UIViewController {
+    let audioSession = AVAudioSession.sharedInstance()
+    let audioManager = AudioManager.shared
     var playing: Bool = false
     var timer: Timer = Timer()
     var trackID: String?
-    var player: AVPlayer?
+//    var player: AVPlayer?
     var trackData: RecomendedModel?
     var viewModel: TrackPlayerViewModel?
     let defaultTrackURL: URL = URL(string: "https://p.scdn.co/mp3-preview/b4e70a4b9cfc7e25c2ac9c6ec4325524ec84c1d1?cid=6046cf4a650c41f985b4ccf3ee4603e2")!
@@ -144,13 +146,17 @@ class TrackPlayerViewController: UIViewController {
     private func setupViewModel() {
         viewModel = TrackPlayerViewModel()
         guard let trackDataID = trackData?.id else { return }
+        audioManager.trackID = trackDataID
+        
         viewModel?.getTrackDetails(id: trackDataID, completion: { [weak self] trackURL in
             if let songURL = trackURL {
-                self?.player = AVPlayer(url: songURL)
-                self?.player?.play()
+                
+                self?.audioManager.playAudioFromURLs(urls: [songURL])
+
+                
             } else {
-                self?.player = AVPlayer(url: self!.defaultTrackURL)
-                self?.player?.play()
+                self?.audioManager.playAudioFromURLs(urls: [self!.defaultTrackURL])
+                    
             }
         })
     }
@@ -171,14 +177,14 @@ class TrackPlayerViewController: UIViewController {
     private func didTapPlayPause() {
         
         if playing {
-            player?.pause()
+            audioManager.stopAudio()
             playing = false
             timer.invalidate()
             playPauseButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
             
         } else {
             playing = true
-            player?.play()
+            audioManager.playAudio()
             playPauseButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
             startTimer()
         }
@@ -201,7 +207,6 @@ class TrackPlayerViewController: UIViewController {
             }
         }
     }
-
 }
 
 //MARK: - SetupViews
