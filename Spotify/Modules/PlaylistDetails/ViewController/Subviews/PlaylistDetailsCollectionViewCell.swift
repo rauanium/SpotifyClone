@@ -65,7 +65,6 @@ class PlaylistDetailsCollectionViewCell: UICollectionViewCell {
         songNumberLabel.text = nil
         songTitleLabel.text = nil
         songArtistLabel.text = nil
-
     }
     
     //MARK: - SettingUp Cell

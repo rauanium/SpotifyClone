@@ -8,9 +8,9 @@
 import UIKit
 
 class SearchViewController: BaseViewController {
-    
+//    var categoryData = SearchViewModel.shared.categoryData
+    var viewModel: SearchViewModel?
     private lazy var compositionalLayout: UICollectionView = {
-        
         let compositionalLayout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection?  in
             self.createCompostionalLayout(section: sectionIndex)
         }
@@ -44,6 +44,20 @@ class SearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupViewModel()
+//        print("categoryData: \(categoryData)")
+    }
+    
+    func setupViewModel() {
+        viewModel = SearchViewModel()
+        viewModel?.didLoad()
+        viewModel?.loadCategories(completion: {
+            self.compositionalLayout.reloadData()
+        })
+        
+        viewModel?.loadSearchedTracks(completion: {
+            
+        })
     }
     
     func setupViews() {
@@ -138,16 +152,29 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        let type = viewModel?.getSectionViewModel(at: section)
+        switch type {
+        case .categoryItem(let dataModel):
+            print(dataModel.count)
+            return dataModel.count
+        default:
+            return 20
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CategoriesCollectionViewCell.identifier,
-            for: indexPath) as! CategoriesCollectionViewCell
-
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        switch type {
+        case .categoryItem(let dataModel):
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CategoriesCollectionViewCell.identifier,
+                for: indexPath) as! CategoriesCollectionViewCell
+            cell.configure(data: dataModel[indexPath.row])
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
         
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

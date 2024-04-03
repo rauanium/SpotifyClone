@@ -35,7 +35,6 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(categoryTitle)
         
         contentView.layer.cornerRadius = 4
-        contentView.backgroundColor = .carrot
         
         categoryTitle.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
@@ -43,8 +42,9 @@ class CategoriesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure() {
-        
+    func configure(data: CategorySectionModel) {
+        categoryTitle.text = data.categoryTitle
+        contentView.backgroundColor = data.color
     }
     
     
