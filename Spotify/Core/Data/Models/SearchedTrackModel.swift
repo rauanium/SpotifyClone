@@ -34,7 +34,7 @@ struct SearchedTrackArtist: Codable {
 }
 
 struct SearchedTrackImage: Codable {
-    let url: String
+    let url: URL?
 }
 
 //{

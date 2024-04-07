@@ -48,9 +48,10 @@ class SearchViewModel {
     }
     
     
-    func loadSearchedTracks(completion: @escaping () -> ()){
-        CategoriesManager.shared.getSearchedTracks(query: "runaway") {
-            completion()
-        }
-    }
+//    func loadSearchedTracks(completion: @escaping () -> ()){
+//        SearchManager.shared.getSearchedTracks(query: "runaway") {
+//            
+//            completion()
+//        }
+//    }
 }

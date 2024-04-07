@@ -55,9 +55,9 @@ class SearchViewController: BaseViewController {
             self.compositionalLayout.reloadData()
         })
         
-        viewModel?.loadSearchedTracks(completion: {
-            
-        })
+//        viewModel?.loadSearchedTracks(completion: {
+//            
+//        })
     }
     
     func setupViews() {
@@ -83,6 +83,14 @@ extension SearchViewController: UISearchResultsUpdating{
             return
         }
         print("searchedText: \(searchedText)")
+        SearchManager.shared.getSearchedTracks(query: searchedText) { result in
+            switch result {
+            case .success(let track):
+                searchResultsViewController.update(with: track)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
@@ -176,6 +184,25 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let type = viewModel?.getSectionViewModel(at: indexPath.section)
+        switch type {
+        case .categoryItem(let dataModel):
+            let categoryPlaylistsViewController = CategoryPlaylistsViewController()
+//            playlistDetailsViewController.playlistID = dataModel[indexPath.row].albumID
+            categoryPlaylistsViewController.categoryPlaylistID = dataModel[indexPath.row].categoryId
+            categoryPlaylistsViewController.categoryTitle = dataModel[indexPath.row].categoryTitle
+            categoryPlaylistsViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(categoryPlaylistsViewController, animated: true)
+//            print("indexPath: \(indexPath.row)")
+            
+        default:
+            break
+        }
+    }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(

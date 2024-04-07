@@ -10,8 +10,7 @@ import Moya
 
 enum CategoriesTarget {
     case getCategories
-    case getSearchedTrack(query: String)
-    
+    case getCategoryPlaylists(categoryID: String)
 }
 
 extension CategoriesTarget: BaseTargetType {
@@ -23,8 +22,8 @@ extension CategoriesTarget: BaseTargetType {
         switch self {
         case .getCategories:
             return "/v1/browse/categories"
-        case .getSearchedTrack:
-            return"/v1/search"
+        case .getCategoryPlaylists(let categoryID):
+            return "/v1/browse/categories/\(categoryID)/playlists"
         }
     }
     
@@ -34,13 +33,10 @@ extension CategoriesTarget: BaseTargetType {
             return .requestParameters(parameters: ["limit" : 20,
                                                 "offset": 0],
                                     encoding: URLEncoding.default)
-        case .getSearchedTrack(let query):
-            return .requestParameters(parameters: ["q" : query,
-                                                   "limit" : 50,
-                                                   "offset" : 0,
-                                                   "type" : "track"
-                                                   
-            ],
+        case .getCategoryPlaylists:
+            return .requestParameters(parameters: 
+                                        ["limit" : 20,
+                                         "offset": 0],
                                       encoding: URLEncoding.default)
         }
         

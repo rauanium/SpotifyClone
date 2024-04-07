@@ -38,24 +38,25 @@ final class CategoriesManager {
         }
     }
     
-    func getSearchedTracks(query: String, completion: @escaping () -> () ) {
-        provider.request(.getSearchedTrack(query: query)) { result in
+    func getCategoryPlaylists(categoryID: String, completion: @escaping (APIResult<[PlaylistItems]>) -> Void) {
+        provider.request(.getCategoryPlaylists(categoryID: categoryID)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let decodedData = try JSONDecoder().decode(SearchedTrackModel.self, from: response.data)
+                    let decodedData = try JSONDecoder().decode(FeaturedPlaylistsModel.self, from: response.data)
                     DispatchQueue.main.async {
-                        print("decodedData: \(decodedData)")
-                        completion()
+                        completion(.success(decodedData.playlists.items))
                     }
                 }
                 catch {
                     print(error)
                 }
-                
-            case .failure(_):
+            case .failure(let error):
+                print(error)
                 break
             }
         }
     }
+    
+    
 }
