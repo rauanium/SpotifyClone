@@ -19,6 +19,7 @@ struct PlaylistItems: Decodable {
     let images: [PlaylistImages]
     let name: String
     let id: String //not sure
+    let type: String
 }
 
 struct PlaylistImages: Decodable {

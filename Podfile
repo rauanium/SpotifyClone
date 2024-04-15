@@ -10,5 +10,6 @@ target 'Spotify' do
 	pod 'SwiftKeychainWrapper'
  	pod 'Kingfisher'
 	pod 'SkeletonView'
+	pod 'lottie-ios'
 
 end

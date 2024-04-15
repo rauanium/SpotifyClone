@@ -7,9 +7,18 @@
 
 import UIKit
 import Kingfisher
+import Lottie
+
+protocol PlaylistGeneralDetailsViewControllerDelegate: AnyObject {
+    func didTapLikeButton()
+    func didTapShareButton()
+    func didTapPlayPause()
+}
+
 
 class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
     
+    var delegate: PlaylistGeneralDetailsViewControllerDelegate?
     static let identifier = "PlaylistGeneralDetailsCollectionViewCell"
     private lazy var albumCover = ImageFactory.createImage(
         width: 120,
@@ -79,23 +88,33 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
     private lazy var albumIconStack = StackFactory.createStack(
         axis: .horizontal,
         alignment: .center,
-        distribution: .fillProportionally,
+        distribution: .equalSpacing,
         isSkeletonable: true
     )
+
+    private lazy var favoriteImage: UIButton = {
+        let playPauseButton = UIButton()
+        playPauseButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        playPauseButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 26), forImageIn: .normal)
+        playPauseButton.tintColor = .white
+        playPauseButton.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+        return playPauseButton
+    }()
     
-    private lazy var favoriteImage = ImageFactory.createImage(
-        contentMode: .scaleAspectFill,
-        cornerRadius: 0,
-        imageNamed: UIImage(systemName: "heart")?.withTintColor(.white, renderingMode: .alwaysOriginal),
-        isSkeletonable: true
-    )
-    
-    private lazy var shareImage = ImageFactory.createImage(
-        contentMode: .scaleAspectFit,
-        cornerRadius: 0,
-        imageNamed: UIImage(systemName: "square.and.arrow.up")?.withTintColor(.white, renderingMode: .alwaysOriginal),
-        isSkeletonable: true
-    )
+//    private lazy var shareImage = ImageFactory.createImage(
+//        contentMode: .scaleAspectFit,
+//        cornerRadius: 0,
+//        imageNamed: UIImage(systemName: "square.and.arrow.up")?.withTintColor(.white, renderingMode: .alwaysOriginal),
+//        isSkeletonable: true
+//    )
+    private lazy var shareImage: UIButton = {
+        let playPauseButton = UIButton()
+        playPauseButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        playPauseButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 24), forImageIn: .normal)
+        playPauseButton.tintColor = .white
+        playPauseButton.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        return playPauseButton
+    }()
 
     private lazy var moreImage = ImageFactory.createImage(
         contentMode: .scaleAspectFit,
@@ -104,13 +123,14 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
         isSkeletonable: true
     )
     
-    private lazy var playPauseImage = ImageFactory.createImage(
-        width: 56,
-        height: 56,
-        cornerRadius: 0,
-        imageNamed: UIImage(named: "playImage"),
-        isSkeletonable: true
-    )
+    private lazy var playPauseButton: UIButton = {
+        let playPauseButton = UIButton()
+        playPauseButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+        playPauseButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 56), forImageIn: .normal)
+        playPauseButton.tintColor = .spotifyGreen
+        playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
+        return playPauseButton
+    }()
     
     //MARK: - Init
     
@@ -121,6 +141,19 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    func didTapPlayPause() {
+        delegate?.didTapPlayPause()
+    }
+    @objc
+    func didTapShareButton() {
+        delegate?.didTapShareButton()
+    }
+    @objc
+    func didTapLikeButton() {
+        delegate?.didTapLikeButton()
     }
     
     //MARK: - SetupViews
@@ -138,7 +171,7 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
             artistStack.addArrangedSubview($0)
         }
         
-        [albumIconStack, playPauseImage].forEach {
+        [albumIconStack, playPauseButton].forEach {
             albumActionStack.addArrangedSubview($0)
         }
         
@@ -177,23 +210,9 @@ class PlaylistGeneralDetailsCollectionViewCell: UICollectionViewCell {
         }
         
         albumIconStack.snp.makeConstraints { make in
-            make.width.equalTo(120)
+            make.width.equalTo(100)
             make.height.equalTo(100)
             
-        }
-        playPauseImage.snp.makeConstraints { make in
-            make.width.equalTo(56)
-            make.height.equalTo(56)
-        }
-        
-        favoriteImage.snp.makeConstraints { make in
-            make.width.equalTo(30)
-            make.height.equalTo(30)
-        }
-        
-        shareImage.snp.makeConstraints { make in
-            make.width.equalTo(30)
-            make.height.equalTo(30)
         }
         
         moreImage.snp.makeConstraints { make in

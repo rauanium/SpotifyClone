@@ -99,6 +99,7 @@
 		91F94E782B7CA94E00994574 /* Spotify.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 91F94E762B7CA94E00994574 /* Spotify.xcdatamodeld */; };
 		91F94E7A2B7CA95300994574 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F94E792B7CA95300994574 /* Assets.xcassets */; };
 		91F94E7D2B7CA95300994574 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91F94E7B2B7CA95300994574 /* LaunchScreen.storyboard */; };
+		91FBDB362BC2C5A300CBC60F /* PlayPauseAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 91FBDB352BC2C5A300CBC60F /* PlayPauseAnimation.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -198,6 +199,7 @@
 		91F94E7C2B7CA95300994574 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91F94E7E2B7CA95300994574 /* Spotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Spotify.entitlements; sourceTree = "<group>"; };
 		91F94E7F2B7CA95300994574 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91FBDB352BC2C5A300CBC60F /* PlayPauseAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PlayPauseAnimation.json; sourceTree = "<group>"; };
 		A3431C9E0361A28D327CB033 /* Pods_Spotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3750D05DCCE9A703B6C443D /* Pods-Spotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify.release.xcconfig"; path = "Target Support Files/Pods-Spotify/Pods-Spotify.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -375,6 +377,7 @@
 		91BF96F22B87197D00CA5CE0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				91FBDB342BC2C59500CBC60F /* Animations */,
 				919BF22E2BA73DA4008F4D6C /* Localizations */,
 				91F94E6F2B7CA94E00994574 /* SceneDelegate.swift */,
 				91F94E792B7CA95300994574 /* Assets.xcassets */,
@@ -443,8 +446,8 @@
 		91C9F8F62BAD789B0090B1F6 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				91C9F8FF2BAD9D630090B1F6 /* PlaylistDetailsCollectionViewCell.swift */,
 				91C9F9032BADA8400090B1F6 /* PlaylistGeneralDetailsCollectionViewCell.swift */,
+				91C9F8FF2BAD9D630090B1F6 /* PlaylistDetailsCollectionViewCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -828,6 +831,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		91FBDB342BC2C59500CBC60F /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				91FBDB352BC2C5A300CBC60F /* PlayPauseAnimation.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		9468C14F577915625501EA43 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,6 +919,7 @@
 			files = (
 				91F94E7D2B7CA95300994574 /* LaunchScreen.storyboard in Resources */,
 				919BF2312BA73E07008F4D6C /* Localizable.strings in Resources */,
+				91FBDB362BC2C5A300CBC60F /* PlayPauseAnimation.json in Resources */,
 				91F94E7A2B7CA95300994574 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

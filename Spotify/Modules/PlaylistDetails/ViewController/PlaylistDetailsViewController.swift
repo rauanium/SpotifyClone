@@ -7,9 +7,12 @@
 
 import UIKit
 
-class PlaylistDetailsViewController: UIViewController {
+class PlaylistDetailsViewController: UIViewController, PlaylistGeneralDetailsViewControllerDelegate {
+    
+    
     var viewModel: PlaylistDetailsViewModel?
     var playlistID: String?
+    
     
     private lazy var compostionalLayout: UICollectionView = {
         let compositionalLayout = UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
@@ -31,6 +34,7 @@ class PlaylistDetailsViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavigationBar()
         setupViews()
         getPlaylistDetailsViewModel()
@@ -46,6 +50,25 @@ class PlaylistDetailsViewController: UIViewController {
         resetNavigationBar()
     }
     
+    func didTapLikeButton() {
+        print("like")
+    }
+    
+    func didTapShareButton() {
+        guard let url = URL(string: "https://open.spotify.com/playlist/\(String(describing: playlistID))") else { return }
+        let activityViewController = UIActivityViewController(
+            activityItems: ["Check this amazing playlist", url],
+            applicationActivities: []
+        )
+        
+        present(activityViewController, animated: true)
+    }
+    
+    func didTapPlayPause() {
+        print("play pause")
+    }
+    
+    //MARK: - Settingup ViewModel
     private func getPlaylistDetailsViewModel() {
         viewModel = PlaylistDetailsViewModel()
         viewModel?.didLoad()
@@ -228,6 +251,9 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
         switch type {
         case .general(let dataModel):
             let cell = compostionalLayout.dequeueReusableCell(withReuseIdentifier: PlaylistGeneralDetailsCollectionViewCell.identifier, for: indexPath) as! PlaylistGeneralDetailsCollectionViewCell
+            
+            ///delegate cell to controll buttons
+            cell.delegate = self
             
             cell.configure(data: dataModel[indexPath.row])
             print("indexPath.row \(indexPath.row)")

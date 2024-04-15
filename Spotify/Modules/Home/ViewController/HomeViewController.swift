@@ -193,6 +193,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case .featuredPlaylists(_, let dataModel):
             let playlistDetailsViewController = PlaylistDetailsViewController()
             playlistDetailsViewController.playlistID = dataModel[indexPath.row].albumID
+            
             playlistDetailsViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(playlistDetailsViewController, animated: true)
 
