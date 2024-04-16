@@ -16,7 +16,6 @@ class AudioManager {
     
     func playAudioFromURLs(urls: [URL]) {
         playlist = urls
-        
         playNextAudio()
     }
     
@@ -25,7 +24,6 @@ class AudioManager {
             print("playlist empty")
             return
         }
-        
         
         let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)

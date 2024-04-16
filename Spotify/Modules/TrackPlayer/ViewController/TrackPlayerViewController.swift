@@ -14,8 +14,10 @@ class TrackPlayerViewController: UIViewController {
     var playing: Bool = false
     var timer: Timer = Timer()
     var trackID: String?
+    var trackIDs: [String]?
 //    var player: AVPlayer?
-    var trackData: RecomendedModel?
+    var currentIndex = 0
+    var trackData: [RecomendedModel]?
     var viewModel: TrackPlayerViewModel?
     let defaultTrackURL: URL = URL(string: "https://p.scdn.co/mp3-preview/b4e70a4b9cfc7e25c2ac9c6ec4325524ec84c1d1?cid=6046cf4a650c41f985b4ccf3ee4603e2")!
     
@@ -28,7 +30,7 @@ class TrackPlayerViewController: UIViewController {
     }()
     
     private lazy var trackTitleHeader = LabelFactory.createLabel(
-        text: trackData?.coverTitle,
+        text: trackData?[currentIndex].coverTitle,
         font: UIFont.systemFont(ofSize: 13, weight: .bold),
         textAlignment: .center
     )
@@ -145,18 +147,14 @@ class TrackPlayerViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel = TrackPlayerViewModel()
-        guard let trackDataID = trackData?.id else { return }
+        guard let trackDataID = trackData?[currentIndex].id else { return }
         audioManager.trackID = trackDataID
         
         viewModel?.getTrackDetails(id: trackDataID, completion: { [weak self] trackURL in
             if let songURL = trackURL {
-                
                 self?.audioManager.playAudioFromURLs(urls: [songURL])
-
-                
             } else {
                 self?.audioManager.playAudioFromURLs(urls: [self!.defaultTrackURL])
-                    
             }
         })
     }
@@ -170,7 +168,16 @@ class TrackPlayerViewController: UIViewController {
     
     @objc
     private func didTapPrevious() {
-        print("previous")
+        if currentIndex == 0 {
+            previousButton.isEnabled = false
+            previousButton.tintColor = .subtitle
+        } else {
+            previousButton.isEnabled = true
+            currentIndex -= 1
+            setupViewModel()
+            updateUI()
+            startTimer()
+        }
     }
     
     @objc
@@ -192,10 +199,25 @@ class TrackPlayerViewController: UIViewController {
     
     @objc
     private func didTapNext() {
-        print("next")
+        if currentIndex != 0 {
+            previousButton.isEnabled = true
+            previousButton.tintColor = .white
+        }
+        if currentIndex == trackData?.count {
+            nextButton.isEnabled = false
+            nextButton.tintColor = .subtitle
+        } else {
+            
+            nextButton.isEnabled = true
+            currentIndex += 1
+            setupViewModel()
+            updateUI()
+            startTimer()
+        }
     }
     
     private func startTimer() {
+        self.trackSlider.value = 0
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.trackSlider.value += 1
@@ -206,6 +228,13 @@ class TrackPlayerViewController: UIViewController {
                 timer.invalidate()
             }
         }
+    }
+    
+    private func updateUI() {
+        let imageURL = trackData?[currentIndex].coverImage
+        coverImage.kf.setImage(with: imageURL)
+        trackTitle.text = trackData?[currentIndex].coverTitle
+        trackArtist.text = trackData?[currentIndex].coverSubtitle
     }
 }
 
@@ -292,10 +321,11 @@ extension TrackPlayerViewController {
             make.left.right.equalToSuperview().inset(48)
             make.height.equalTo(62)
         }
-        let imageURL = trackData?.coverImage
+        
+        let imageURL = trackData?[currentIndex].coverImage
         coverImage.kf.setImage(with: imageURL)
         
-        trackTitle.text = trackData?.coverTitle
-        trackArtist.text = trackData?.coverSubtitle
+        trackTitle.text = trackData?[currentIndex].coverTitle
+        trackArtist.text = trackData?[currentIndex].coverSubtitle
     }
 }

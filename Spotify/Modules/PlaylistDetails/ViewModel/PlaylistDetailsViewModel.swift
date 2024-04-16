@@ -22,8 +22,9 @@ class PlaylistDetailsViewModel {
         sections.append(.playlistSongs(dataModel: []))
     }
     
-    func loadPlaylistDetails(id: String, completion: @escaping () -> ()) {
+    func loadPlaylistDetails(id: String, completion: @escaping ([RecomendedModel]) -> ()) {
         var playlistItems: [PlaylistDetailsModel] = []
+        var trackData: [RecomendedModel] = [] // return this to work with players next and back
         var playlistSongs: [PlaylistSongDetailsDataModel] = []
         var duration = 0
         AlbumsAndPlaylistItemManager.shared.getPlaylistItems(id: id) {[weak self] result in
@@ -32,6 +33,13 @@ class PlaylistDetailsViewModel {
                 
                 for index in 0..<response.tracks.total {
                     duration += response.tracks.items[index].track.duration
+                    
+                    trackData.append(.init(
+                        id: response.tracks.items[index].track.id,
+                        coverImage: response.tracks.items[index].track.album.images.first?.url,
+                        coverTitle: response.tracks.items[index].track.name,
+                        coverSubtitle: response.tracks.items[index].track.artists.first?.name))
+                    
                 }
                 
                 playlistItems.append(.init(
@@ -70,11 +78,11 @@ class PlaylistDetailsViewModel {
                 }) {
                     self?.sections[index] = .playlistSongs(dataModel: playlistSongs)
                 }
-                completion()
+                completion(trackData)
                 
             case .failure(let error):
                 print(error)
-                completion()
+                completion([])
             }
         }
         

@@ -12,6 +12,7 @@ class PlaylistDetailsViewController: UIViewController, PlaylistGeneralDetailsVie
     
     var viewModel: PlaylistDetailsViewModel?
     var playlistID: String?
+    var trackData: [RecomendedModel] = []
     
     
     private lazy var compostionalLayout: UICollectionView = {
@@ -65,7 +66,15 @@ class PlaylistDetailsViewController: UIViewController, PlaylistGeneralDetailsVie
     }
     
     func didTapPlayPause() {
-        print("play pause")
+        let trackPlayerViewController = TrackPlayerViewController()
+//        trackPlayerViewController.trackData = .init(
+//            id: dataModel[indexPath.row].id,
+//            coverImage: dataModel[indexPath.row].coverImage,
+//            coverTitle: dataModel[indexPath.row].songTitle,
+//            coverSubtitle: dataModel[indexPath.row].songArtist)
+        trackPlayerViewController.trackData = trackData
+        trackPlayerViewController.modalPresentationStyle = .overFullScreen
+        present(trackPlayerViewController, animated: true)
     }
     
     //MARK: - Settingup ViewModel
@@ -75,8 +84,13 @@ class PlaylistDetailsViewController: UIViewController, PlaylistGeneralDetailsVie
         
         guard let playlistID else { return }
         
-        viewModel?.loadPlaylistDetails(id: playlistID, completion:{
+        
+        viewModel?.loadPlaylistDetails(id: playlistID, completion: { playlistTrackData in
             self.compostionalLayout.reloadData()
+            DispatchQueue.main.async {
+                self.trackData = playlistTrackData
+            }
+            
         })
     }
     
@@ -274,11 +288,13 @@ extension PlaylistDetailsViewController: UICollectionViewDataSource, UICollectio
         switch type {
         case .playlistSongs(let dataModel):
             let trackPlayerViewController = TrackPlayerViewController()
-            trackPlayerViewController.trackData = .init(
+            trackPlayerViewController.trackData = [.init(
                 id: dataModel[indexPath.row].id,
                 coverImage: dataModel[indexPath.row].coverImage,
                 coverTitle: dataModel[indexPath.row].songTitle,
-                coverSubtitle: dataModel[indexPath.row].songArtist)
+                coverSubtitle: dataModel[indexPath.row].songArtist)]
+//
+//            trackPlayerViewController.trackData = dataModel[indexPath.row]
             trackPlayerViewController.modalPresentationStyle = .overFullScreen
             present(trackPlayerViewController, animated: true)
 

@@ -105,7 +105,7 @@ extension SearchResultsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
         let trackPlayerViewController = TrackPlayerViewController()
-        trackPlayerViewController.trackData = .init(id: item.id, coverImage: item.image, coverTitle: item.title, coverSubtitle: item.arist)
+        trackPlayerViewController.trackData = [.init(id: item.id, coverImage: item.image, coverTitle: item.title, coverSubtitle: item.arist)]
         print("id: \(item.id)")
         trackPlayerViewController.modalPresentationStyle = .overFullScreen
         present(trackPlayerViewController, animated: true)

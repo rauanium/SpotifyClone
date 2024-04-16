@@ -386,11 +386,11 @@ extension AlbumDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let trackPlayerViewController = TrackPlayerViewController()
-        trackPlayerViewController.trackData = .init(
+        trackPlayerViewController.trackData = [.init(
             id: albumTracks[indexPath.row].id,
             coverImage: imageURL,
             coverTitle: albumTracks[indexPath.row].name,
-            coverSubtitle: albumTracks[indexPath.row].artists.first?.name)
+            coverSubtitle: albumTracks[indexPath.row].artists.first?.name)]
         trackPlayerViewController.modalPresentationStyle = .overFullScreen
         present(trackPlayerViewController, animated: true)
     }

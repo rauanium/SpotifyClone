@@ -199,7 +199,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
         case .recommended(_, let dataModel):
             let trackPlayerViewController = TrackPlayerViewController()
-            trackPlayerViewController.trackData = dataModel[indexPath.row]
+            trackPlayerViewController.trackData = [dataModel[indexPath.row]]
             trackPlayerViewController.modalPresentationStyle = .overFullScreen
             present(trackPlayerViewController, animated: true)
             
